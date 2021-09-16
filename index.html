@@ -83,7 +83,7 @@
 
   function createTD(name, aHref, imgSrc) {
     let td = document.createElement('td')
-    if (aHref) {
+    if (aHref && name!=="cthiebaud.com") {
       let url = document.createElement('a')
       if (imgSrc) {
         let img = document.createElement('img')
