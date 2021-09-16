@@ -32,6 +32,8 @@
 </body>
 
 <script>
+  "use strict"
+
   /* beautify ignore:start */
 
   const sites = {
@@ -58,7 +60,7 @@
 
   function createTR(key, gh) {
     let tr = document.createElement('tr')
-    let td1 = createTD(key, `https://${name}`)
+    let td1 = createTD(key, `https://${key}`)
     let td2 = createTD(gh, `https://github.com/${gh}`)
     tr.appendChild(td1)
     tr.appendChild(td2)
