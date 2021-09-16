@@ -47,7 +47,6 @@
     </div>
   </nav>
   <main class="container-lg table-responsive">
-    <div>/usr/local/etc/nginx/nginx.conf</div>
     <table class="table table-sm table-dark table-hover">
       <thead>
         <tr>
@@ -59,6 +58,14 @@
       </thead>
       <tbody id="domains">
       </tbody>
+      <tfoot>
+        <tr>
+          <td></td>
+          <td></td>
+          <td class="text-muted">/usr/local/etc/nginx/nginx.conf</td>
+          <td></td>
+        </tr>
+      </tfoot>
     </table>
   </main>
 </body>
@@ -70,12 +77,12 @@
   const domains = {
     "aequologica.net"            : {  gh: "aequologica/aequologica.github.io"                     , local: 8080 },
     "benoîturbain.com"           : {  gh: "benoiturbain/benoiturbain.github.io"                   , local: 2020 },
-    "carolethomas.com"           : {  gh: "carolethomas/carolethomas.github.io"                   , local: 7070 },
+    "carolethomas.com"           : {  gh: "carolethomas/carolethomas.github.io"                   , local: 3030 },
     "covid.aequologica.net"      : {  gh: "covid-aequologica-net/covid-aequologica-net.github.io" , local: undefined },
-    "cthiebaud.com"              : {  gh: "cthiebaud/cthiebaud.github.io"                         , local: 5050 },
-    "emugnier.cthiebaud.com"     : {  gh: "cthiebaud/emugnier"                                    , local: 3030 },
+    "cthiebaud.com"              : {  gh: "cthiebaud/cthiebaud.github.io"                         , local: 4040 },
+    "emugnier.cthiebaud.com"     : {  gh: "cthiebaud/emugnier"                                    , local: 5050 },
     "ericmugnier.com"            : {  gh: "mugnierandthiebaud/mugnierandthiebaud.github.io"       , local: 6060 },
-    "klam.cthiebaud.com"         : {  gh: "cthiebaud/klam"                                        , local: 4040 },
+    "klam.cthiebaud.com"         : {  gh: "cthiebaud/klam"                                        , local: 7070 },
     "mugnierandthiebaud.com"     : {  gh: "mugnierandthiebaud/mugnierandthiebaud.github.io"       , local: undefined },
     "sangiosleague.it"           : {  gh: "sangiosleague/sangiosleague.github.io"                 , local: 4001 },
     "sangiovannilipioni.net"     : {  gh: "sangiovannilipioni/sangiovannilipioni.github.io"       , local: 3001 },
