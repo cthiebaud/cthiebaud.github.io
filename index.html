@@ -12,9 +12,63 @@
 </head>
 
 <body>
-  <div class=container-lg>
-    <h1 class="text-center">C'est le site de Christophe Thiebaud</h1>
-  </div>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div>
+      &nbsp;
+    </div>
+  </nav>
+  <main class="container-lg">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Site</th>
+          <th>Github</th>
+        </tr>
+      </thead>
+      <tbody id="sites">
+      </tbody>
+    </table>
+  </main>
 </body>
+
+<script>
+  /* beautify ignore:start */
+
+  const sites = {
+    "aequologica.net"            : {  gh: "aequologica/aequologica.github.io" },
+    "burbain.cthiebaud.com"      : {  gh: "benoiturbain/benoiturbain.github.io" },
+    "covid.aequologica.net"      : {  gh: "covid-aequologica-net/covid-aequologica-net.github.io" },
+    "cthiebaud.com"              : {  gh: "cthiebaud/cthiebaud.github.io" },
+    "emugnier.cthiebaud.com"     : {  gh: "cthiebaud/emugnier" },
+    "klam.cthiebaud.com"         : {  gh: "cthiebaud/klam" },
+    "sangiosleague.it"           : {  gh: "sangiosleague/sangiosleague.github.io" },
+    "sangiovannilipioni.net"     : {  gh: "sangiovannilipioni/sangiovannilipioni.github.io" },
+  }
+  /* beautify ignore:end */
+
+  function createTD(name, href) {
+    let td = document.createElement('td')
+    let url = document.createElement('a')
+    url.textContent = name
+    url.setAttribute('href', href)
+    url.setAttribute('target', `_blank`)
+    td.appendChild(url)
+    return td
+  }
+
+  function createTR(key, gh) {
+    let tr = document.createElement('tr')
+    let td1 = createTD(key, `https://${name}`)
+    let td2 = createTD(gh, `https://github.com/${gh}`)
+    tr.appendChild(td1)
+    tr.appendChild(td2)
+    return tr
+  }
+  const tbody = document.querySelector('#sites')
+  for (const [key, value] of Object.entries(sites)) {
+    console.log(key, value)
+    tbody.appendChild(createTR(key, value.gh))
+  }
+</script>
 
 </html>
