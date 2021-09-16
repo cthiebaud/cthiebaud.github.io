@@ -46,7 +46,6 @@
       </div>
     </div>
   </nav>
-  <img src="/svgs/github.svg" title="github" class="mx-2" style="width:24px; height:auot;">
   <main class="container-lg table-responsive">
     <table class="table table-sm table-dark table-hover">
       <thead>
@@ -66,7 +65,6 @@
   "use strict"
 
   /* beautify ignore:start */
-
   const domains = {
     "aequologica.net"            : {  gh: "aequologica/aequologica.github.io" },
     "benoîturbain.com"           : {  gh: "benoiturbain/benoiturbain.github.io" },
@@ -83,7 +81,7 @@
 
   function createTD(name, aHref, imgSrc) {
     let td = document.createElement('td')
-    if (aHref && name!=="cthiebaud.com") {
+    if (aHref && name !== "cthiebaud.com") {
       let url = document.createElement('a')
       if (imgSrc) {
         let img = document.createElement('img')
@@ -103,11 +101,11 @@
     return td
   }
 
-  function createTR(index, domainName, gh) {
+  function createTR(index, domainName, githubSlug) {
     let tr = document.createElement('tr')
     tr.appendChild(createTD(index))
     tr.appendChild(createTD(domainName, `https://${domainName}`))
-    tr.appendChild(createTD(gh, `https://github.com/${gh}`, "/svgs/github.svg"))
+    tr.appendChild(createTD(githubSlug, `https://github.com/${githubSlug}`, "/svgs/github.svg"))
     return tr
   }
   const tbody = document.querySelector('#domains')
