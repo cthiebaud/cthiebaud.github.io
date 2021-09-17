@@ -51,19 +51,16 @@
       <thead>
         <tr>
           <th>#</th>
-          <th>Domain</th>
-          <th>Local</th>
-          <th>Github</th>
+          <th class="text-center">Domain</th>
+          <th class="text-center">Local</th>
+          <th class="text-center">Github</th>
         </tr>
       </thead>
       <tbody id="domains">
       </tbody>
       <tfoot>
         <tr>
-          <td></td>
-          <td></td>
-          <td class="text-muted">/usr/local/etc/nginx/nginx.conf</td>
-          <td></td>
+          <td class="text-muted text-end" colspan="4">/usr/local/etc/nginx/nginx.conf</td>
         </tr>
       </tfoot>
     </table>
@@ -89,8 +86,11 @@
   } 
   /* beautify ignore:end */
 
-  function createTD(name, aHref, imgSrc) {
+  function createTD(name, aHref, imgSrc, clazz) {
     let td = document.createElement('td')
+    if (clazz) {
+      td.classList.add(clazz)
+    }
     if (aHref && name !== "cthiebaud.com") {
       let url = document.createElement('a')
       if (imgSrc) {
@@ -115,8 +115,8 @@
     let tr = document.createElement('tr')
     tr.appendChild(createTD(index))
     tr.appendChild(createTD(domainName , `https://${domainName}`))
-    tr.appendChild(createTD(value.local, `http://localhost:${value.local}`))
-    tr.appendChild(createTD(value.gh   , `https://github.com/${value.gh}`, "/svgs/github.svg"))
+    tr.appendChild(createTD(value.local, `http://localhost:${value.local}`, undefined, "text-center"))
+    tr.appendChild(createTD(value.gh   , `https://github.com/${value.gh}`, "/svgs/github.svg", "text-center"))
     return tr
   }
   const tbody = document.querySelector('#domains')
