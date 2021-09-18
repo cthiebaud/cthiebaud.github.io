@@ -9,17 +9,16 @@
 
     <style>
         body {
-            font-size: .94vw;
             background: url(Mozart-Lange.jpg) no-repeat center center;
             background-size: cover;
             overflow: hidden;
         }
 
-        span:hover {
+        body>span:hover {
             mix-blend-mode: screen;
         }
 
-        span {
+        body>span {
             text-align: center !important;
             background-color: #ffffff00;
             font-weight: bold;
@@ -127,9 +126,15 @@
         }
     });
 
+    const box = {
+        cx: 534.25,
+        cy: 151
+    }
+    const boxRatio = box.cx / box.cy
+
     function windowOnResize() {
         parent.replaceChildren()
-        const windowRatio = (window.innerWidth / 4) / window.innerHeight
+        const windowRatio = (window.innerWidth / boxRatio) / window.innerHeight
 
 
         let i = binarySearch(ratios.map(r => r.ratio), windowRatio)
@@ -147,6 +152,8 @@
             cy: window.innerHeight / theRatio.y
         }
 
+        parent.style.fontSize = `${theRect.cy*.8}px`;
+
         let pos = 0;
         const shuffle = shuffleArray([...Array(factorial).keys()])
 
@@ -161,6 +168,7 @@
 
                 span.style = `
                     position: absolute;
+                    line-height: ${theRect.cy}px;
                     left: ${_left}px;
                     right: ${_right}px;
                     top: ${_top}px;
