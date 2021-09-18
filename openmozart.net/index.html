@@ -14,43 +14,27 @@
             overflow: hidden;
         }
 
-        body>span:hover {
-            mix-blend-mode: screen;
-        }
-
         body>span {
-            text-align: center !important;
             background-color: #ffffff00;
-            font-weight: bold;
             background: black;
             color: white;
+            font-weight: bold;
             mix-blend-mode: multiply;
+            position: relative;
+            text-align: center !important;
+        }
+
+        body>span:hover {
+            mix-blend-mode: screen;
         }
     </style>
 </head>
 
-<body class="vh-100" style="position: relative;">
+<body class="vh-100">
 </body>
 
 <script>
     "use strict"
-
-    // http://stackoverflow.com/questions/20789373/shuffle-array-in-ng-repeat-angular
-    // -> Fisher–Yates shuffle algorithm
-    function shuffleArray(array) {
-        let m = array.length,
-            t, i;
-        // While there remain elements to shuffle
-        while (m) {
-            // Pick a remaining element…
-            i = Math.floor(Math.random() * m--);
-            // And swap it with the current element.
-            t = array[m];
-            array[m] = array[i];
-            array[i] = t;
-        }
-        return array;
-    }
 
     // http://stackoverflow.com/questions/20789373/shuffle-array-in-ng-repeat-angular
     // -> Fisher–Yates shuffle algorithm
