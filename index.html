@@ -18,6 +18,7 @@
     a {
       color: #cff4fc;
       text-decoration: none;
+      margin-right: .5rem;
     }
 
     main img {
@@ -81,49 +82,60 @@
     "ericmugnier.com"            : {  gh: "mugnierandthiebaud/mugnierandthiebaud.github.io"       , local: 6060 },
     "klam.cthiebaud.com"         : {  gh: "cthiebaud/klam"                                        , local: 7070 },
     "mugnierandthiebaud.com"     : {  gh: "mugnierandthiebaud/mugnierandthiebaud.github.io"       , local: undefined },
-    "openmozart.cthiebaud.com"   : {  gh: "cthiebaud/openmozart.net"                              , local: 9090 },
-    "sangiosleague.it"           : {  gh: "sangiosleague/sangiosleague.github.io"                 , local: 4001 },
-    "sangiovannilipioni.net"     : {  gh: "sangiovannilipioni/sangiovannilipioni.github.io"       , local: 3001 },
+    "openmozart.cthiebaud.com"   : {  gh: "cthiebaud/openmozart.net"                              , local: [5000, 5001] },
+    "sangiosleague.it"           : {  gh: "sangiosleague/sangiosleague.github.io"                 , local: [4000, 4001] },
+    "sangiovannilipioni.net"     : {  gh: "sangiovannilipioni/sangiovannilipioni.github.io"       , local: [3000, 3001] },
   } 
   /* beautify ignore:end */
 
-  function createTD(name, aHref, imgSrc, clazz) {
+  // utility functions
+  function isArray(obj) {
+    return Object.prototype.toString.call(obj) === "[object Array]"
+  }
+
+  function createTD(name, hrefGenerator, imgSrc, clazz) {
     let td = document.createElement('td')
     if (clazz) {
       td.classList.add(clazz)
     }
-    if (aHref && name !== "cthiebaud.com") {
-      let url = document.createElement('a')
-      if (imgSrc) {
-        let img = document.createElement('img')
-        img.setAttribute('src', imgSrc)
-        img.setAttribute('style', "width:24px; height:auto;")
-        url.appendChild(img)
-      } else {
-        url.textContent = name
+    if (!isArray(name)) {
+      name = [name]
+    }
+    name.forEach(nam => {
+        if (hrefGenerator && nam !== "cthiebaud.com") {
+          let url = document.createElement('a')
+          if (imgSrc) {
+            let img = document.createElement('img')
+            img.setAttribute('src', imgSrc)
+            img.setAttribute('style', "width:24px; height:auto;")
+            url.appendChild(img)
+          } else {
+            url.textContent = nam
+          }
+          url.setAttribute('href', hrefGenerator(nam))
+          url.setAttribute('target', `_blank`)
+          td.appendChild(url)
+        } else {
+          td.textContent = nam
+        }
       }
 
-      url.setAttribute('href', aHref)
-      url.setAttribute('target', `_blank`)
-      td.appendChild(url)
-    } else {
-      td.textContent = name
-    }
+    )
     return td
   }
 
   function createTR(index, domainName, value) {
     let tr = document.createElement('tr')
     tr.appendChild(createTD(index))
-    tr.appendChild(createTD(domainName , `https://${domainName}`))
-    tr.appendChild(createTD(value.local, `http://localhost:${value.local}`, undefined, "text-center"))
-    tr.appendChild(createTD(value.gh   , `https://github.com/${value.gh}`, "/svgs/github.svg", "text-center"))
+    tr.appendChild(createTD(domainName, n => `https://${n}`))
+    tr.appendChild(createTD(value.local, n => `http://localhost:${n}`, undefined, "text-center"))
+    tr.appendChild(createTD(value.gh, n => `https://github.com/${n}`, "/svgs/github.svg", "text-center"))
     return tr
   }
   const tbody = document.querySelector('#domains')
   let i = 1
   for (const [domainName, value] of Object.entries(domains)) {
-    tbody.appendChild(createTR(i++, domainName, value ))
+    tbody.appendChild(createTR(i++, domainName, value))
   }
 </script>
 
