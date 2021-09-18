@@ -161,10 +161,10 @@
             if (l == r) {
                 let span = document.createElement('span')
                 const shu = shuffle[pos]
-                const _left = Math.round(theRect.cx * (shu % theRatio.x))
-                const _right = Math.round(window.innerWidth - _left - theRect.cx)
-                const _top = Math.round(theRect.cy * Math.floor(shu / theRatio.x))
-                const _bottom = Math.round(window.innerHeight - _top - theRect.cy)
+                const _left = (theRect.cx * (shu % theRatio.x))
+                const _right = (window.innerWidth - _left - theRect.cx)
+                const _top = (theRect.cy * Math.floor(shu / theRatio.x))
+                const _bottom = (window.innerHeight - _top - theRect.cy)
 
                 span.style = `
                     position: absolute;
