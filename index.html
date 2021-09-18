@@ -18,7 +18,11 @@
     a {
       color: #cff4fc;
       text-decoration: none;
-      margin-right: .5rem;
+    }
+
+    td>*,
+    th>* {
+      margin: 0 3px;
     }
 
     main img {
@@ -93,34 +97,34 @@
     return Object.prototype.toString.call(obj) === "[object Array]"
   }
 
-  function createTD(name, hrefGenerator, imgSrc, clazz) {
+  function createTD(names, hrefGenerator, imgSrc, clazz) {
     let td = document.createElement('td')
     if (clazz) {
       td.classList.add(clazz)
     }
-    if (!isArray(name)) {
-      name = [name]
+    if (!isArray(names)) {
+      names = [names]
     }
-    name.forEach(nam => {
-        if (hrefGenerator && nam !== "cthiebaud.com") {
-          let url = document.createElement('a')
-          if (imgSrc) {
-            let img = document.createElement('img')
-            img.setAttribute('src', imgSrc)
-            img.setAttribute('style', "width:24px; height:auto;")
-            url.appendChild(img)
-          } else {
-            url.textContent = nam
-          }
-          url.setAttribute('href', hrefGenerator(nam))
-          url.setAttribute('target', `_blank`)
-          td.appendChild(url)
+    names.forEach(name => {
+      let child
+      if (hrefGenerator && name !== "cthiebaud.com") {
+        child = document.createElement('a')
+        if (imgSrc) {
+          let img = document.createElement('img')
+          img.setAttribute('src', imgSrc)
+          img.setAttribute('style', "width:24px; height:auto;")
+          child.appendChild(img)
         } else {
-          td.textContent = nam
+          child.textContent = name
         }
+        child.setAttribute('href', hrefGenerator(name))
+        child.setAttribute('target', `_blank`)
+      } else {
+        child = document.createElement('span')
+        child.textContent = name
       }
-
-    )
+      td.appendChild(child)
+    })
     return td
   }
 
