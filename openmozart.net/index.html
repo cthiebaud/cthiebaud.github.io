@@ -70,7 +70,7 @@
         const divisorsList = []
         const divisors = (n) => [...Array(n + 1).keys()].slice(1)
             .reduce((s, a) => {
-                var divisor = !(n % a) && a
+                const divisor = !(n % a) && a
                 if (divisor) divisorsList.push(divisor)
                 return s + divisor
             }, 0)
