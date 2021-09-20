@@ -80,10 +80,10 @@
     "aequologica.net"            : {  gh: "aequologica/aequologica.github.io"                     , local: 8080 },
     "benoîturbain.com"           : {  gh: "benoiturbain/benoiturbain.github.io"                   , local: 2020 },
     "carolethomas.com"           : {  gh: "carolethomas/carolethomas.github.io"                   , local: 3030 },
-    "covid.aequologica.net"      : {  gh: "covid-aequologica-net/covid-aequologica-net.github.io" , local: undefined },
-    "cthiebaud.com"              : {  gh: "cthiebaud/cthiebaud.github.io"                         , local: 4040 },
-    "emugnier.cthiebaud.com"     : {  gh: "cthiebaud/emugnier"                                    , local: 5050 },
-    // "ericmugnier.com"            : {  gh: "mugnierandthiebaud/mugnierandthiebaud.github.io"       , local: 6060 },
+    "covid.aequologica.net"      : {  gh: "covid-aequologica-net/covid-aequologica-net.github.io" , local: 4040 },
+    "cthiebaud.com"              : {  gh: "cthiebaud/cthiebaud.github.io"                         , local: 5050 },
+    "emugnier.cthiebaud.com"     : {  gh: "cthiebaud/emugnier"                                    , local: 6060 },
+    // "ericmugnier.com"            : {  gh: "mugnierandthiebaud/mugnierandthiebaud.github.io"       , local: undefined },
     "klam.cthiebaud.com"         : {  gh: "cthiebaud/klam"                                        , local: 7070, page: 'botanist.html'},
     // "mugnierandthiebaud.com"     : {  gh: "mugnierandthiebaud/mugnierandthiebaud.github.io"       , local: undefined },
     "openmozart.cthiebaud.com"   : {  gh: "cthiebaud/openmozart.net"                              , local: [5000, 5001] },
@@ -131,8 +131,8 @@
   function createTR(index, domainName, value) {
     let tr = document.createElement('tr')
     tr.appendChild(createTD(index))
-    tr.appendChild(createTD(domainName, value.page ? n => `https://${n}/${value.page}`: n => `https://${n}` ))
-    tr.appendChild(createTD(value.local, n => `http://localhost:${n}`, undefined, "text-center"))
+    tr.appendChild(createTD(domainName, value.page ? n => `https://${n}/${value.page}` : n => `https://${n}`))
+    tr.appendChild(createTD(value.local, value.page ? n => `http://localhost:${n}/${value.page}` : n => `http://localhost:${n}`, undefined, "text-center"))
     tr.appendChild(createTD(value.gh, n => `https://github.com/${n}`, "/svgs/github.svg", "text-center"))
     return tr
   }
