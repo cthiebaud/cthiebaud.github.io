@@ -84,7 +84,7 @@
     "cthiebaud.com"              : {  gh: "cthiebaud/cthiebaud.github.io"                         , local: 4040 },
     "emugnier.cthiebaud.com"     : {  gh: "cthiebaud/emugnier"                                    , local: 5050 },
     // "ericmugnier.com"            : {  gh: "mugnierandthiebaud/mugnierandthiebaud.github.io"       , local: 6060 },
-    "klam.cthiebaud.com"         : {  gh: "cthiebaud/klam"                                        , local: 7070 },
+    "klam.cthiebaud.com"         : {  gh: "cthiebaud/klam"                                        , local: 7070, page: 'botanist.html'},
     // "mugnierandthiebaud.com"     : {  gh: "mugnierandthiebaud/mugnierandthiebaud.github.io"       , local: undefined },
     "openmozart.cthiebaud.com"   : {  gh: "cthiebaud/openmozart.net"                              , local: [5000, 5001] },
     "sangiosleague.it"           : {  gh: "sangiosleague/sangiosleague.github.io"                 , local: [4000, 4001] },
@@ -131,7 +131,7 @@
   function createTR(index, domainName, value) {
     let tr = document.createElement('tr')
     tr.appendChild(createTD(index))
-    tr.appendChild(createTD(domainName, n => `https://${n}`))
+    tr.appendChild(createTD(domainName, value.page ? n => `https://${n}/${value.page}`: n => `https://${n}` ))
     tr.appendChild(createTD(value.local, n => `http://localhost:${n}`, undefined, "text-center"))
     tr.appendChild(createTD(value.gh, n => `https://github.com/${n}`, "/svgs/github.svg", "text-center"))
     return tr
