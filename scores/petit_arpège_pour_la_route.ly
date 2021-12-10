@@ -76,7 +76,7 @@
 
     \repeat percent 2 { a, g' e-2 c'-1 g  e' 
     c e g, c fis,-4 g 
-    c e g, c fis, g  |
+    c e g, c fis,-4 g  |
     }
 
     \break
