@@ -61,7 +61,6 @@ bbarre =
     \partial 2
     <<
         {
-
         a'4.-3\4\RH #3  a8 }
         \\
         { 
