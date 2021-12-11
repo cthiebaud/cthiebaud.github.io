@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="canonical" href="https://cthiebaud.com/ciaccona/index.html" />
+
+  <!-- Open Graph data -->
+  <meta property="og:locale" content="en_US">
+  <meta property="og:title" content="Christophe Thiebaud" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://cthiebaud.com/ciaccona/index.html" />
+  <meta property="og:description" content="Ciaccona from Partita in D minor for solo violin (BWV 1004) by Johann Sebastian Bach" />
+  <meta property="og:site_name" content="Ciaccona" />
+
+  <meta property="og:image" content="https://cthiebaud.com/ciaccona/Chaconne-Manuscript.png" />
+  <meta property="og:image:url" content="https://cthiebaud.com/ciaccona/Chaconne-Manuscript.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="970" />
+  <meta property="og:image:height" content="469" />
+
+  <title>Ciaccona</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@latest/dist/css/bootstrap.min.css">
+
+  <style>
+  </style>
+
+</head>
+
+<!--
+lilypond-book index.html --output .output
+-->
+
+<body>
+  <main class="container-lg table-responsive">
+    <table class="table table-sm table-hover">
+      <thead>
+        <tr>
+          <th class="text-center" style="font-size: 2rem;">𝄞</th>
+          <th class="text-center">👤</th>
+        </tr>
+      </thead>
+      <tbody id="parts">
+        <tr>
+          <td>
+            <lilypond quote fragment staffsize=26>
+              \relative c' {
+    
+                \time 3/4
+                \key d \minor
+                
+                \partial 2
+                <<
+                    { a'4. a8 }
+                    \\
+                    { < f d >2 }
+                >>
+                % 1
+                <<
+                    { e'4 }
+                    \\
+                    { < bes g d >4 }
+                >>
+              }
+            </lilypond>            
+          </td>
+          <td style="text-align: right;">
+            <img src="/ciaccona0/images/Anne-Lise Maclos-Longeard.png" style="width:200px; height:auto;">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <lilypond quote fragment staffsize=26>
+              \relative c'' {
+                \time 3/4
+                \key d \minor
+
+                % 8
+                <<
+                    { < d f >8. }
+                    \\
+                    { d,8. e16 f8. g32 a bes8. a16 }
+                >>
+                
+                % 9
+                <<
+                    { < bes e >8 s }
+                    \\
+                    { g8. }
+                    \\
+                    { d8 }
+                >>    
+              }
+            </lilypond>            
+          </td>
+          <td style="text-align: right;">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <lilypond quote fragment staffsize=26>
+              \relative c' {
+                \time 3/4
+                \key d \minor
+                % 16
+    <<
+        { d'8. e16 f8. g32 a bes8. f16 }
+        \\
+        { d,8 s s4 s8. d'16 }
+        \\
+        { d,8 }
+    >>
+    
+    % 17
+    % 4th pentagram from bach's manuscript starts on 3rd beat
+    <<
+        { e'8.  }
+        \\
+        { cis4  }
+    >>
+              }
+            </lilypond>            
+          </td>
+          <td style="text-align: right;">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <lilypond quote fragment staffsize=26>
+              \relative c {
+                \time 3/4
+                \key d \minor
+                % 24
+                <<
+                    { f'8 f' e d cis d }
+                    \\
+                    { d,8 }
+                >>
+                
+                % 25
+                <<
+                    { g8 a16( bes) cis,8 }
+                    \\
+                    { d8 }
+                >>
+                              }
+            </lilypond>            
+          </td>
+          <td style="text-align: right;">
+            <img src="/ciaccona0/images/Claudia Bedini.jpg" style="width:200px; height:auto;">
+          </td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td class="text-muted text-end" colspan="2">The End</td>
+        </tr>
+      </tfoot>
+    </table>
+  </main>
+</body>
+
+<script>
+  "use strict"
+  const persons = [
+"Anne-Lise Maclos-Longeard",
+"Ariane Chabert",
+"Carole Thomas",
+"Claudia Bedini",
+"Enrica Labanti",
+"Erin Yae Lin Lee",
+"Erminia de Angelis",
+"Kitty Lam",
+"Lucrezia Nappini",
+"Luisa Sermasi",
+"Maria Pina Rossi",
+"Mylène Jampanoï",
+"Nathalie Magnier",
+"Nicole, Virgine & Catherine Thiebaud",
+"Silvia Grzbiela",
+"Sylvie Rietsch",
+"Benoît Urbain",
+"Eric Mugnier",
+"Flavio Piscopo",
+"Francois Veillerette",
+"Giuliano Rossi",
+"Jean-Pierre Léaud",
+"Mauro Mattioli",
+"Philippe Benoist",
+"Régis Ecosse",
+"Umberto D'Aloise ",
+"Alejandra Ferrero-Vidal & Christoph Szymanski",
+"Alessia & Paul Thiebaud",
+"Florence & Laurent Bajou",
+"Françoise Doré & Manuel Gouthiere",
+"Françoise Favaro & Jacques Claude ",
+"Michèle Thiebaud & Jean-Fernand Amar",
+
+  ]
+</script>
+
+</html>
