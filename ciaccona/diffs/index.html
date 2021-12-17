@@ -64,8 +64,9 @@
     qwe: {s:"info", m:1, c:"disjoint stems"},
     asd: {s:"info", m:4, c:"lower slur"},
     zxc: {s:"warning", m:7, c:"measure number is 7"},
-    wer: {s:"info", m:12, c:"2 Ds at start are joined"},
-    sdf: {s:"danger", m:37, c:"no ♮ before last G"},
+    wer: {s:"info", m:13, c:"2 Ds at start are joined"},
+    sdf: {s:"warning", m:37, c:"scores identical, but wrong midi file<br><i>→ replace '<code>g</code>' by '<code>\\once \\omit Accidental gis</code>'</i>"},
+    xcv: {s:"warning", m:72, c:"scores identical, but wrong midi file<br><i>→ replace '<code>\\once \\omit Accidental cis</code>' by '<code>c</code>'</i>"},
   } 
   /* beautify ignore:end */
 
@@ -86,7 +87,7 @@
       child.setAttribute('style', "width:auto; height:120px;")
     } else {
       child = document.createElement('span')
-      child.textContent = content
+      child.innerHTML = content
     }
     td.appendChild(child)
     return td
