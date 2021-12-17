@@ -50,7 +50,7 @@
       </tbody>
       <tfoot>
         <tr>
-          <td class="text-muted text-end" colspan="4">footer</td>
+          <td class="text-muted text-end" colspan="5">Adagio BWV 1001</td>
         </tr>
       </tfoot>
     </table>
@@ -62,7 +62,12 @@
 
   /* beautify ignore:start */
   const diffs = {
-    qwe: {s:"info", m:3, c:"E ♮ or ♮ ?", types: ["png", "jpg", "png"]},
+    qwe: {s:"", m:3, c:"E ♮ or ♭?", types: ["png", "jpg", "png"]},
+    asd: {s:"", m:6, c:"E ♮ or ♭?", types: ["png", "jpg", "png"]},
+    zxc: {s:"", m:9, c:"all scores identical, but wrong midi file", types: ["png", "jpg", "png"]},
+    wer: {s:"", m:11, c:"all scores identical, but wrong midi file", types: ["png", "jpg", "png"]},
+    sdf: {s:"", m:13, c:"E ♮ or ♭?", types: ["png", "jpg", "png"]},
+    xcv: {s:"", m:19, c:"First F ♯ or ♮?", types: ["png", "jpg", "png"]},
   } 
   /* beautify ignore:end */
 
@@ -80,7 +85,7 @@
     if (directory) {
       child = document.createElement('img')
       child.setAttribute('src', "images/"+directory+"/"+content)
-      child.setAttribute('style', "width:auto; height:120px;")
+      child.setAttribute('style', "width:auto; height:115px;")
     } else {
       child = document.createElement('span')
       child.textContent = content
