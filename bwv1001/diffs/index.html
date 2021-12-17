@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="canonical" href="https://cthiebaud.com" />
+
+  <!-- Open Graph data -->
+  <meta property="og:locale" content="en_US">
+  <meta property="og:title" content="Christophe Thiebaud" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://cthiebaud.com/diff.html" />
+  <meta property="og:description" content="diff ciaccona" />
+  <meta property="og:site_name" content="cthiebaud.com/diff.html" />
+
+  <meta property="og:image" content="https://cthiebaud.com/cthiebaud.png" />
+  <meta property="og:image:url" content="https://cthiebaud.com/cthiebaud.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+
+  <!-- https://realfavicongenerator.net/svg-favicon/ -->
+  <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg">
+  <link rel="icon" type="image/png" href="/favicon/favicon.png">
+  
+  <title>Christophe Thiebaud</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@latest/dist/css/bootstrap.min.css">
+
+  <style>
+  </style>
+
+</head>
+
+<body>
+  <main class="container-lg table-responsive">
+    <table class="table table-sm table-hover">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th class="text-center">lilypond</a></th>
+          <th class="text-center">manuscript</a></th>
+          <th class="text-center">baerenreiter</a></th>
+          <th class="text-center">note</th>
+        </tr>
+      </thead>
+      <tbody id="diffs">
+      </tbody>
+      <tfoot>
+        <tr>
+          <td class="text-muted text-end" colspan="4">footer</td>
+        </tr>
+      </tfoot>
+    </table>
+  </main>
+</body>
+
+<script>
+  "use strict"
+
+  /* beautify ignore:start */
+  const diffs = {
+    qwe: {s:"info", m:3, c:"E ♮ or ♮ ?", types: ["png", "jpg", "png"]},
+  } 
+  /* beautify ignore:end */
+
+  // utility functions
+  function isArray(obj) {
+    return Object.prototype.toString.call(obj) === "[object Array]"
+  }
+
+  function createTD(content, directory, clazz) {
+    let td = document.createElement('td')
+    if (clazz) {
+      td.classList.add(clazz)
+    }
+    let child
+    if (directory) {
+      child = document.createElement('img')
+      child.setAttribute('src', "images/"+directory+"/"+content)
+      child.setAttribute('style', "width:auto; height:120px;")
+    } else {
+      child = document.createElement('span')
+      child.textContent = content
+    }
+    td.appendChild(child)
+    return td
+  }
+
+  function createTR(index, content, value) {
+    let tr = document.createElement('tr')
+    tr.appendChild(createTD(value.m, undefined, `bg-${value.s}`))
+    let image = `m${value.m}.${value.types[0]}`
+    tr.appendChild(createTD(image, "edmundo", "text-end"))
+    image = `m${value.m}.${value.types[2]}`
+    tr.appendChild(createTD(image, "manuscript"))
+    image = `m${value.m}.${value.types[1]}`
+    tr.appendChild(createTD(image, "baerenreiter"))
+    tr.appendChild(createTD(value.c))
+    return tr
+  }
+  const tbody = document.querySelector('#diffs')
+  let i = 1
+  for (const [content, value] of Object.entries(diffs)) {
+    tbody.appendChild(createTR(i++, content, value))
+  }
+</script>
+
+</html>
