@@ -42,6 +42,7 @@
           <th>#</th>
           <th class="text-center"><a href="documents/BWV 1004 - 5 Ciaccona.pdf" target="_lilypond">lilypond</a></th>
           <th class="text-center"><a href="documents/IMSLP150643-PMLP04292-BWV_1001_-_1006_(D_B_Mus._ms._Bach_P_967).pdf" target="_manuscript">manuscript</a></th>
+          <th class="text-center">baerenreiter</a></th>
           <th class="text-center">note</th>
         </tr>
       </thead>
@@ -84,7 +85,7 @@
     if (directory) {
       child = document.createElement('img')
       child.setAttribute('src', "images/"+directory+"/"+content)
-      child.setAttribute('style', "width:auto; height:120px;")
+      child.setAttribute('style', "width:auto; height:100px;")
     } else {
       child = document.createElement('span')
       child.innerHTML = content
@@ -99,6 +100,8 @@
     const image = `m${value.m}.png`
     tr.appendChild(createTD(image, "edmundo", "text-end"))
     tr.appendChild(createTD(image, "manuscript"))
+    const image2 = `m${value.m}.jpg`
+    tr.appendChild(createTD(image2, "baerenreiter"))
     tr.appendChild(createTD(value.c))
     return tr
   }
