@@ -62,12 +62,12 @@
 
   /* beautify ignore:start */
   const diffs = {
-    qwe: {s:"info", m:1, c:"disjoint stems"},
-    asd: {s:"info", m:4, c:"lower slur"},
+    qwe: {s:"info", m:1, c:"disjoint stems<br><span style='color:gray'>→ use '<code>\\new Voice \{ \\voice[One|Two|Three|…]}</code>'</span>"},
+    asd: {s:"info", m:4, c:"lower slur<br><span style='color:gray'>→ prefix slur with '_', e.g. <code>[ e _( f d )] a4. a8 |</code></span>"},
     zxc: {s:"warning", m:7, c:"measure number is 7<br><span style='color:gray'>→ add '<code>\set Score.currentBarNumber = #2</code>'</span>"},
-    wer: {s:"info", m:13, c:"2 Ds at start are joined"},
+    wer: {s:"info", m:13, c:"2 Ds at start are joined<br><span style='color:gray'>→ prefix one D with '<code>\once \override NoteColumn.force-hshift = 0</code>'</span>"},
     sdf: {s:"warning", m:37, c:"scores identical, but wrong midi file<br><span style='color:gray'>→ replace '<code>g</code>' by '<code>\\once \\omit Accidental gis</code>'</span>"},
-    xcv: {s:"warning", m:72, c:"scores identical, but wrong midi file<br><span style='color:gray'>→ replace '<code>\\once \\omit Accidental cis</code>' by '<code>c</code>'</span>"},
+    xcv: {s:"danger", m:72, c:"scores identical, but wrong midi file<br><span style='color:gray'>→ replace '<code>\\once \\omit Accidental cis</code>' by '<code>c</code>'</span>"},
   } 
   /* beautify ignore:end */
 
