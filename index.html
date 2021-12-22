@@ -99,7 +99,7 @@
   const domains = {
     "aequologica.net"            : {  gh: "aequologica/aequologica.github.io"                     , local: 8080 },
     "benoîturbain.com"           : {  gh: "benoiturbain/benoiturbain.github.io"                   , local: 2020 },
-    "ciaccona"                   : {  gh: "cthiebaud/ciaccona"                                                  },
+    "ciaccona.cthiebaud.com"     : {  gh: "cthiebaud/ciaccona"                                    , local: 1010 },
     "carolethomas.com"           : {  gh: "carolethomas/carolethomas.github.io"                   , local: 3030 },
     "covid.aequologica.net"      : {  gh: "covid-aequologica-net/covid-aequologica-net.github.io" , local: 4040 },
     "cthiebaud.com"              : {  gh: "cthiebaud/cthiebaud.github.io"                         , local: 5050 },
@@ -129,7 +129,7 @@
     }
     names.forEach(name => {
       let child
-      if (hrefGenerator && name !== "cthiebaud.com" && name !== "ciaccona") {
+      if (hrefGenerator && name !== "cthiebaud.com") {
         child = document.createElement('a')
         if (imgSrc) {
           let img = document.createElement('img')
