@@ -1,0 +1,31 @@
+
+<!-- saved from url=(0057)https://forecast.lemonde.fr/ls.html?origin=www.lemonde.fr -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <script>
+            window.onmessage = function (event) {
+                if (event.origin !== 'https://www.lemonde.fr') {
+                    return;
+                }
+
+                try {
+                    var payload = JSON.parse(event.data);
+
+                    switch (payload.method) {
+                        case 'set':
+                            localStorage.setItem(payload.key, payload.data);
+                            break;
+
+                        case 'get':
+                            var parent = window.parent;
+                            var data = localStorage.getItem(payload.key);
+                            parent.postMessage(data, '*');
+                            break;
+
+                        case 'remove':
+                            localStorage.removeItem(payload.key);
+                            break;
+                    }
+                }
+                catch(error) {
+                }
+            };
+        </script> </head> <body>  </body></html>
