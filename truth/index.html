@@ -81,7 +81,7 @@
 <body>
     <div id="con" class="pt-3 container" style="visibility: hidden; max-width: 540px;">
         <h1 style="color:#204850;">(a, b) => &hellip;</h1>
-        <div id="tables" class="font-monospace"></div>
+        <div id="tables" class="font-monospace" style="text-align: center;"></div>
         <h1 class="text-center mt-3" style="font-family: 'UnifrakturCook', cursive; font-size: 72px; color:#204850;">Truth</h1>
     </div>
     <script type="module">
@@ -255,17 +255,17 @@
         window.addEventListener("load", (event) => {
             doIt()
             document.getElementById("con").style.visibility = 'visible'
-            document.getElementById("con").addEventListener('click', (e) => { 
+            document.getElementById("con").addEventListener('click', (e) => {
                 shuffleArray(colors)
-                doIt() 
+                doIt()
+                /*
+                setInterval(() => {
+                    doIt()
+                }, 1000);
+                */
             })
         });
 
-        /*
-        setInterval(() => {
-            doIt()
-        }, 1000);
-        */
     </script>
 </body>
 
