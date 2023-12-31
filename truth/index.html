@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Truth Tables</title>
+    <link href="./favicon.ico" rel="icon" type="image/x-icon">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: transparent;
+            color: #204850;
+        }
+
+        #tables>div {
+            display: inline-block;
+            border: #e2e3e4 1px solid;
+            margin: .25rem;
+            margin-bottom: 0;
+            padding-bottom: 0;
+            padding: 0;
+        }
+
+        table.inline {
+            display: inline-block;
+            margin: 0;
+        }
+
+        table caption {
+            white-space: nowrap;
+            font-weight: bold;
+            font-size: 18px;
+            background-color: transparent;
+        }
+
+        table th {
+            text-align: center;
+            vertical-align: middle;
+            font-weight: normal;
+        }
+
+        table td {
+            width: 56px;
+            height: 56px;
+            text-align: center;
+            vertical-align: middle;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            font-size: larger;
+        }
+
+        table td.true {
+            background-color: #1E5AA8;
+            color: #1E5AA8;
+        }
+
+        table td.false {
+            background-color: #B40000;
+            color: #B40000;
+        }
+
+        .shadowed-text {
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .vertical-text {
+            writing-mode: vertical-rl;
+            /* Vertical writing mode, right to left */
+            transform: rotate(180deg);
+            /* Rotate the text 180 degrees */
+        }
+    </style>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap');
+    </style>
+    <!-- 
+        <script type="text/javascript" src="https://livejs.com/live.js"></script>
+    -->
+</head>
+
+<body>
+    <div id="con" class="pt-3 container" style="visibility: hidden; max-width: 540px;">
+        <h1 style="color:#204850;">(a, b) => &hellip;</h1>
+        <div id="tables" class="font-monospace"></div>
+        <h1 class="text-center mt-3" style="font-family: 'UnifrakturCook', cursive; font-size: 72px; color:#204850;">Truth</h1>
+    </div>
+    <script type="module">
+        import tinycolor from 'https://cdn.jsdelivr.net/npm/tinycolor2@1.6.0/+esm'
+
+        const array = [true, false] // [null, true, false] // 
+        const lineBreaks = false // true // 
+        const showResult = true // array.length === 3 // 
+
+        // document.getElementById("con").style.backgroundColor = '#fedcba'
+        const colorFalse = '#FFFFFF' //'#F4F4F4'
+        const colorTrue = '#545955'
+
+        const colors = [
+            /*
+            */
+            '#F4F4F4',
+            '#FAC80A',
+            '#B40000',
+            '#00852B',
+            '#1E5AA8',
+            '#8A928D',
+            /*'#000000',*/
+            '#ABD9FF',
+            /*
+            '#543324',
+            '#545955',
+            '#FF8014',
+            '#BB805A',
+            '#D86D2C',
+            '#F2705E',
+            '#FF879C',
+            '#CCB98D',
+            '#78FC78',
+            '#CF8A47',
+            '#FF9494',
+            '#ADD9A8',
+            '#FFF230',
+            '#F6A9BB',
+            '#FFD67F',
+            '#7FC475',
+            '#AFBED6',
+            '#D05098',
+            */
+            '#91501C',
+            /*
+            '#58AB41',
+            '#97CBD9',
+            '#671FA1',
+            '#DA8678',
+            '#EDC4B5',
+            */
+        ]
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]]
+            }
+            console.log("shuffled!")
+        }
+        let c = 0
+        function bumpColors(index) {
+            const ret = [colorFalse, colors[c++]]
+            c %= colors.length
+            console.log(index, c)
+            if (c === 0) {
+                // shuffleArray(colors)
+            }
+            return ret
+        }
+        shuffleArray(colors)
+
+        const functions = [
+            'false',
+            0,
+            'a & b',
+            'a & !b',
+            '!a & !b',
+            '!a & b',
+            0,
+            'a',
+            'b',
+            '!a',
+            '!b',
+            'a == b',
+            'a != b',
+            0,
+            'a | b',
+            'a | !b',
+            '!a | !b',
+            '!a | b',
+            0,
+            'true',
+        ]
+        // shuffleArray(functions)
+
+        const doIt = () => {
+
+            let previousElement = null
+            functions.forEach((func, index) => {
+                const elementID = `element${index}`
+                if (func === 0) {
+                    if (lineBreaks) {
+                        previousElement.insertAdjacentHTML("afterend", `<br id="${elementID}" style="display: block;">`)
+                        previousElement = document.getElementById(elementID)
+                    }
+                } else {
+                    const theadID = `thead${index}`
+                    const tbodyID = `tbody${index}`
+                    const template = `<div id="${elementID}">
+    <table class="table inline table-sm caption-top table-borderless">
+        <caption class="text-center">${func}</caption>
+        <thead id="${theadID}"></thead>
+        <tbody id="${tbodyID}"></tbody>
+    </table>
+</div>
+`
+                    if (previousElement === null) {
+                        document.getElementById('tables').innerHTML = template
+                    } else {
+                        previousElement.insertAdjacentHTML("afterend", template)
+                    }
+                    let colorFalseAndTrue
+                    if (func === 'false') {
+                        colorFalseAndTrue = [colorFalse, colorFalse]
+                    } else if (func === 'true') {
+                        colorFalseAndTrue = [colorTrue, colorTrue]
+                    } else {
+                        colorFalseAndTrue = bumpColors(index)
+                    }
+                    array.forEach((rowElem, indexRow) => {
+                        const row = document.createElement("tr")
+                        array.forEach(colElem => {
+                            console.log(index, func, rowElem, colElem)
+                            const col = document.createElement(rowElem === null || colElem === null ? "th" : "td")
+                            row.appendChild(col)
+                            if (colElem === null) {
+                                if (rowElem === null) {
+                                    col.innerHTML = '&nbsp;'
+                                } else {
+                                    col.innerHTML = `<div class="vertical-text">${rowElem}</div>`
+                                }
+                            } else {
+                                if (rowElem === null) {
+                                    col.innerHTML = colElem
+                                } else {
+                                    const a = rowElem
+                                    const b = colElem
+                                    const result = eval(func)
+                                    // col.classList.add(result ? 'true' : 'false')
+                                    if (result) {
+                                        col.style.color = result ? colorFalseAndTrue[1] : colorFalseAndTrue[0]
+                                        col.style.backgroundColor = tinycolor(col.style.color).lighten(1).toString("hex6")
+                                        if ((func === "a == b" || func === "a != b") && indexRow === 0) {
+                                            colorFalseAndTrue = bumpColors(index)
+                                        }
+                                    } else {
+                                        col.style.color = col.style.backgroundColor = colorFalse
+                                    }
+                                    col.innerHTML = showResult && result ? '●' : '&nbsp;' // showResult ? '●' : '○' 
+                                }
+                            }
+                        })
+                        document.getElementById(rowElem === null ? theadID : tbodyID).appendChild(row)
+                    });
+                    previousElement = document.getElementById(elementID)
+                }
+            });
+        }
+
+        window.addEventListener("load", (event) => {
+            doIt()
+            document.getElementById("con").style.visibility = 'visible'
+        });
+
+        /*
+        setInterval(() => {
+            doIt()
+        }, 1000);
+        */
+    </script>
+</body>
+
+</html>
