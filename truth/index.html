@@ -37,7 +37,8 @@
             font-weight: bold;
             font-size: 18px;
             background-color: #FFFFFFa0;
-            margin-bottom: .5rem;
+            margin-bottom: .375rem;
+            padding: .375rem 0;
         }
 
         table th {
@@ -45,7 +46,7 @@
             vertical-align: middle;
             font-weight: normal;
             font-size: 12px;
-            padding: 0;
+            padding: 1px !important;
             background-color: transparent !important;
         }
 
@@ -55,8 +56,8 @@
             text-align: center;
             vertical-align: middle;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-            font-size: larger;
-            padding: 0;
+            font-size: 25px;
+            padding: 0 1px 4px 0 !important;
         }
 
         .vertical-text {
@@ -78,7 +79,7 @@
     -->
 </head>
 
-<body>
+<body class="font-monospace">
     <div id="con" class="container" style="visibility: hidden; max-width: 580px; padding:0;">
         <div class="p-2">
             <div class="btn-group float-end" role="group">
@@ -102,7 +103,7 @@
                     </svg>
                 </button>
             </div>
-            <h1 class="">(a, b) => &hellip;</h1>
+            <h2>(a,b) => &hellip;</h2>
         </div>
         <div id="tables" class="font-monospace center-children"></div>
         <h1 class="text-center py-2" style="font-family: 'UnifrakturCook', cursive; font-size: 72px;">Truth</h1>
