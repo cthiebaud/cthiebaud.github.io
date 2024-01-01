@@ -21,9 +21,12 @@
 
         #tables>div {
             display: inline-block;
-            border: lightgray 1px solid;
             margin: .25rem;
             padding: 0;
+        }
+
+        #tables.bordered>div {
+            border: lightgray 1px solid;
         }
 
         table.inline {
@@ -82,9 +85,10 @@
         <div class="btn-group float-end" role="group">
             <button id="AB" type="button" class="btn btn-light">ab</button>
             <button id="LF" type="button" class="btn btn-light">§</button>
+            <button id="borders" type="button" class="btn btn-light">⃞</button>
         </div>
         <h1 class="">(a, b) => &hellip;</h1>
-        <div id="tables" class="font-monospace center-children"></div>
+        <div id="tables" class="font-monospace center-children bordered"></div>
         <h1 class="text-center mt-3" style="font-family: 'UnifrakturCook', cursive; font-size: 72px;">Truth</h1>
     </div>
     <script type="module">
@@ -316,6 +320,17 @@
                     document.getElementById("tables").classList.add("center-children")
                 }
                 doIt()
+            })
+            document.getElementById("borders").addEventListener('click', clickEvent => {
+                clickEvent.preventDefault()
+                clickEvent.stopPropagation();
+                (t => {
+                    if (t.classList.contains("bordered")) {
+                        t.classList.remove("bordered")
+                    } else {
+                        t.classList.add("bordered")
+                    }
+                })(document.getElementById("tables"))
             })
 
 
