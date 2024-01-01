@@ -64,33 +64,57 @@
             transform: rotate(180deg);
             /* Rotate the text 180 degrees */
         }
+
+        .center-children {
+            text-align: center;
+        }
     </style>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap');
     </style>
+    <script type="text/javascript" src="https://livejs.com/live.js"></script>
     <!-- 
-        <script type="text/javascript" src="https://livejs.com/live.js"></script>
     -->
 </head>
 
 <body>
     <div id="con" class="pt-3 container" style="visibility: hidden; max-width: 580px; padding:0;">
-        <h1 class="mx-4">(a, b) => &hellip;</h1>
-        <div id="tables" class="font-monospace" style="text-align: center;"></div>
+        <div class="btn-group float-end" role="group">
+            <button id="AB" type="button" class="btn btn-light">AB</button>
+            <button id="LF" type="button" class="btn btn-light">LF</button>
+        </div>
+        <h1 class="">(a, b) => &hellip;</h1>
+        <div id="tables" class="font-monospace center-children"></div>
         <h1 class="text-center mt-3" style="font-family: 'UnifrakturCook', cursive; font-size: 72px;">Truth</h1>
     </div>
     <script type="module">
         import tinycolor from 'https://cdn.jsdelivr.net/npm/tinycolor2@latest/+esm'
 
-        const array = [true, false] // [null, true, false] // 
-        const lineBreaks = false // true // 
-        const showResult = true // array.length === 3 // 
-
-        let cellWidth = '56px'
-        if (array.length === 3) {
-            cellWidth = '52px'
+        function setCellWidth(length) {
+            let cellWidth = '56px'
+            if (length === 3) {
+                cellWidth = '52px'
+            }
+            document.documentElement.style.setProperty('--cell-width', cellWidth);
         }
-        document.documentElement.style.setProperty('--cell-width', cellWidth);
+
+        class AB {
+            constructor() {
+                setCellWidth(this.AB.length)
+            }
+            ABs = [[true, false], [null, true, false]]
+            ABi = 0
+            AB = this.ABs[this.ABi]
+            bump() {
+                this.ABi = (this.ABi + 1) % this.ABs.length
+                this.AB = this.ABs[this.ABi]
+                setCellWidth(this.AB.length)
+            }
+        }
+        let ab = new AB()
+
+        let lineBreaks = false // true // 
+
 
         function shuffleArray(array) {
             for (let i = array.length - 1; i > 0; i--) {
@@ -222,9 +246,9 @@
                     } else {
                         backgroundcolor = colors.nextColor()
                     }
-                    array.forEach((rowElem, indexRow) => {
+                    ab.AB.forEach((rowElem, indexRow) => {
                         const row = document.createElement("tr")
-                        array.forEach(colElem => {
+                        ab.AB.forEach(colElem => {
                             // console.log(index, func, rowElem, colElem)
                             const col = document.createElement(rowElem === null || colElem === null ? "th" : "td")
                             row.appendChild(col)
@@ -250,7 +274,7 @@
                                     } else {
                                         col.style.color = col.style.backgroundColor = colors.colorFalse
                                     }
-                                    col.innerHTML = showResult && result ? '●' : '&nbsp;' // '○' 
+                                    col.innerHTML = result ? '●' /* '○' */ : '&nbsp;'
                                 }
                             }
                         })
@@ -275,6 +299,26 @@
                     */
                 })
             })(document.getElementById("con"))
+
+            document.getElementById("AB").addEventListener('click', clickEvent => {
+                clickEvent.preventDefault()
+                clickEvent.stopPropagation()
+                ab.bump()
+                doIt()
+            })
+            document.getElementById("LF").addEventListener('click', clickEvent => {
+                clickEvent.preventDefault()
+                clickEvent.stopPropagation()
+                lineBreaks = !lineBreaks
+                if (lineBreaks) {
+                    document.getElementById("tables").classList.remove("center-children")
+                } else {
+                    document.getElementById("tables").classList.add("center-children")
+                }
+                doIt()
+            })
+
+
         });
 
     </script>
