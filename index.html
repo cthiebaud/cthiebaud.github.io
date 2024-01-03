@@ -44,6 +44,10 @@
     th>* {
       margin: 0 3px;
     }
+    td:first-child,
+    th:first-child {
+      text-align: right !important;
+    }
 
     main img {
       filter: invert(100%);
@@ -75,7 +79,7 @@
     <table class="table table-sm table-dark table-hover">
       <thead>
         <tr>
-          <th>#</th>
+          <!-- th>#</!-->
           <th class="text-center">Domain</th>
           <th class="text-center">Local</th>
           <th class="text-center">Github</th>
@@ -98,15 +102,15 @@
   /* beautify ignore:start */
   const domains = {
     "aequologica.net"            : {  gh: "aequologica/aequologica.github.io"                     , local: 8080 },
-    "bookshelves.cthiebaud.com"  : {  gh: "cthiebaud/bookshelves"                                 , local: 2345 },
-    "ciaccona.cthiebaud.com"     : {  gh: "musicollator/ciaccona"                                 , local: 1010 },
     "covid.aequologica.net"      : {  gh: "covid-aequologica-net/covid-aequologica-net.github.io" , local: 4040 },
     "cthiebaud.com"              : {  gh: "cthiebaud/cthiebaud.github.io"                         , local: 5050 },
+    "bookshelves.cthiebaud.com"  : {  gh: "cthiebaud/bookshelves"                                 , local: 2345 },
+    "ciaccona.cthiebaud.com"     : {  gh: "musicollator/ciaccona"                                 , local: 1010 },
     "emugnier.cthiebaud.com"     : {  gh: "cthiebaud/emugnier"                                    , local: 6060 },
     "klam.cthiebaud.com"         : {  gh: "cthiebaud/klam"                                        , local: 7070 },
-    "truth.cthiebaud.com"        : {  gh: "cthiebaud/truth"                                       , local: 9090 },
     "openmozart.cthiebaud.com"   : {  gh: "cthiebaud/openmozart.net"                              , local: 5001 },
-    "openricard.cthiebaud.com"   : {  gh: "cthiebaud/openricard.net"                                                    },
+    "openricard.cthiebaud.com"   : {  gh: "cthiebaud/openricard.net"                                            },
+    "truth.cthiebaud.com"        : {  gh: "cthiebaud/truth"                                       , local: 9090 },
   } 
   /* beautify ignore:end */
 
@@ -148,7 +152,7 @@
 
   function createTR(index, domainName, value) {
     let tr = document.createElement('tr')
-    tr.appendChild(createTD(index))
+    // tr.appendChild(createTD(index))
     tr.appendChild(createTD(domainName, value.page ? n => `https://${n}/${value.page}` : n => `https://${n}`))
     tr.appendChild(createTD(value.local, value.page ? n => `http://localhost:${n}/${value.page}` : n => `http://localhost:${n}`, undefined, "text-center"))
     tr.appendChild(createTD(value.gh, n => `https://github.com/${n}`, "/svgs/github.svg", "text-center"))
