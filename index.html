@@ -24,7 +24,7 @@
   <!-- https://realfavicongenerator.net/svg-favicon/ -->
   <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg">
   <link rel="icon" type="image/png" href="/favicon/favicon.png">
-  
+
   <title>Christophe Thiebaud</title>
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@latest/dist/css/bootstrap.min.css">
@@ -44,6 +44,7 @@
     th>* {
       margin: 0 3px;
     }
+
     td:first-child,
     th:first-child {
       text-align: right !important;
@@ -58,6 +59,7 @@
       width: 100px;
       height: 100px;
       object-fit: cover;
+      margin-right: var(--margin-right)
     }
   </style>
 
@@ -67,7 +69,7 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
     <div class="container-lg">
-      <div class="d-flex justify-content-between w-100">
+      <div id="imgContainer" class="d-flex justify-content-between w-100">
         <img title="c'est le petit garçon" src="/moi/petit_cropped_square.jpg">
         <img title="c'est l'étudiant" src="/moi/student_cropped.jpg">
         <img title="c'est en ce moment" src="/moi/marriage_matilde_cropped.jpg">
@@ -91,9 +93,9 @@
         <tr>
           <td class="text-secondary text-end" colspan="4">
             /usr/local/etc/nginx/nginx.conf
-            <br/>
+            <br />
             sudo brew services restart nginx
-            <br/>
+            <br />
           </td>
         </tr>
       </tfoot>
@@ -106,17 +108,17 @@
 
   /* beautify ignore:start */
   const domains = {
-    "aequologica.net"            : {  gh: "aequologica/aequologica.github.io"                     , local: 8080 },
-    "covid.aequologica.net"      : {  gh: "covid-aequologica-net/covid-aequologica-net.github.io" , local: 4040 },
-    "cthiebaud.com"              : {  gh: "cthiebaud/cthiebaud.github.io"                         , local: 5050 },
-    "bookshelves.cthiebaud.com"  : {  gh: "cthiebaud/bookshelves"                                 , local: 2345 },
-    "ciaccona.cthiebaud.com"     : {  gh: "musicollator/ciaccona"                                 , local: 1010 },
-    "emugnier.cthiebaud.com"     : {  gh: "cthiebaud/emugnier"                                    , local: 6060 },
-    "klam.cthiebaud.com"         : {  gh: "cthiebaud/klam"                                        , local: 7070 },
-    "openmozart.cthiebaud.com"   : {  gh: "cthiebaud/openmozart.net"                              , local: 5001 },
-    "openricard.cthiebaud.com"   : {  gh: "cthiebaud/openricard.net"                                            },
-    "truth.cthiebaud.com"        : {  gh: "cthiebaud/truth"                                       , local: 9090 },
-  } 
+    "aequologica.net": { gh: "aequologica/aequologica.github.io", local: 8080 },
+    "covid.aequologica.net": { gh: "covid-aequologica-net/covid-aequologica-net.github.io", local: 4040 },
+    "cthiebaud.com": { gh: "cthiebaud/cthiebaud.github.io", local: 5050 },
+    "bookshelves.cthiebaud.com": { gh: "cthiebaud/bookshelves", local: 2345 },
+    "ciaccona.cthiebaud.com": { gh: "musicollator/ciaccona", local: 1010 },
+    "emugnier.cthiebaud.com": { gh: "cthiebaud/emugnier", local: 6060 },
+    "klam.cthiebaud.com": { gh: "cthiebaud/klam", local: 7070 },
+    "openmozart.cthiebaud.com": { gh: "cthiebaud/openmozart.net", local: 5001 },
+    "openricard.cthiebaud.com": { gh: "cthiebaud/openricard.net" },
+    "truth.cthiebaud.com": { gh: "cthiebaud/truth", local: 9090 },
+  }
   /* beautify ignore:end */
 
   // utility functions
@@ -168,6 +170,27 @@
   for (const [domainName, value] of Object.entries(domains)) {
     tbody.appendChild(createTR(i++, domainName, value))
   }
+
+  // Function to set CSS variable value
+  function calcImgMarginRightCSSVariable() {
+    const imgContainer = document.getElementById('imgContainer')
+    const rect = imgContainer.getBoundingClientRect()
+    let marginRight = 400 - (rect.right - rect.left)
+    if (marginRight > 0 ) {
+      marginRight /= 4
+    }
+    document.documentElement.style.setProperty('--margin-right', `-${marginRight}px`);
+  }
+
+  // Initial setup after document load
+  document.addEventListener('DOMContentLoaded', function () {
+    calcImgMarginRightCSSVariable();
+  });
+
+  // Update CSS variable value on window resize
+  window.addEventListener('resize', function () {
+    calcImgMarginRightCSSVariable();
+  });
 </script>
 
 </html>
