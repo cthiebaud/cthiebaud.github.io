@@ -59,6 +59,9 @@
       width: 100px;
       height: 100px;
       object-fit: cover;
+    }
+
+    .navbar img:not(:last-child) {
       margin-right: var(--margin-right)
     }
   </style>
@@ -69,7 +72,7 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
     <div class="container-lg">
-      <div id="imgContainer" class="d-flex justify-content-between w-100">
+      <div id="imgContainer" class="d-flex justify-content-between w-100" style="overflow: hidden;">
         <img title="c'est le petit garçon" src="/moi/petit_cropped_square.jpg">
         <img title="c'est l'étudiant" src="/moi/student_cropped.jpg">
         <img title="c'est en ce moment" src="/moi/marriage_matilde_cropped.jpg">
@@ -175,11 +178,12 @@
   function calcImgMarginRightCSSVariable() {
     const imgContainer = document.getElementById('imgContainer')
     const rect = imgContainer.getBoundingClientRect()
-    let marginRight = 400 - (rect.right - rect.left)
-    if (marginRight > 0 ) {
-      marginRight /= 4
+    const excedent = 400 - (rect.right - rect.left)
+    if (excedent > 0) {
+      const marginRight = excedent / 3
+      console.log(rect.right - rect.left, excedent, marginRight)
+      document.documentElement.style.setProperty('--margin-right', `-${marginRight}px`);
     }
-    document.documentElement.style.setProperty('--margin-right', `-${marginRight}px`);
   }
 
   // Initial setup after document load
