@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="links-container"></div>
+    <script>
+        const stringArray = [
+            "A Whiter Shade of Pale (Annie Lennox version)",
+            "Almeno tu nell'universo (Mia Martini)",
+            "Billie Jean (Michael Jackson)",
+            "Could It Be Magic (Donna Summer)",
+            "Cymbaline (Pink Floyd)",
+            "Dancing Queen (ABBA)",
+            "Days Of Pearly Spencer (David McWilliams)",
+            "Désenchantée (Mylène Farmer)",
+            "En rouge et noir (Jeanne Mas)",
+            "Encore un soir (Céline Dion)",
+            "Get It On (T-Rex)",
+            "Heart Of Glass (Blondie)",
+            "Heaven Is 10 Zillion Light Years Away (Stevie Wonder)",
+            "Heroes (David Bowie)",
+            "Hey Jude (The Beatles)",
+            "Honky Tonk Women (The Rolling Stones)",
+            "House of the Rising Sun (The Animals)",
+            "I Feel Love (Donna Summer)",
+            "I've Seen That Face Before / Libertango (Grace Jones / Astor Piazzolla)",
+            "Je suis venu te dire que je m'en vais (Serge Gainsbourg)",
+            "Je t'aime moi non plus (Brigitte Bardot)",
+            "Jumpin' Jack Flash (The Rolling Stones)",
+            "L'été indien (Joe Dassin)",
+            "La Javanaise (Serge Gainsbourg)",
+            "Lady D'Arbanville (Cat Stevens)",
+            "Life on Mars (David Bowie)",
+            "Luiza (Antonio Carlos Jobim)",
+            "Michelle (The Beatles)",
+            "Oblivion (Astor Piazzolla)",
+            "Ode To Billie Joe (Bobbie Gentry)",
+            "Old Man (Neil Young)",
+            "One for My Baby (Etta James)",
+            "Pendant que les champs brûlent (Niagara)",
+            "Solo Tu (Matia Bazar)",
+            "Sunny (Bobby Hebb)",
+            "Super Freak (Rick James)",
+            "Superstition (Stevie Wonder)",
+            "Suzanne (Leonard Cohen)",
+            "Sweet Dreams (Annie Lennox)",
+            "The Joker (Steve Miller Band)",
+            "The Locomotion (Little Eva)",
+            "Un homme et une femme (Francis Lai)",
+            "Upside Down (Diana Ross)",
+            "Uptown Funk (Mark Ronson)",
+            "Walk On the Wild Side (Lou Reed)",
+        ]
+        function createGoogleSearchLink(query) {
+            var link = document.createElement("a");
+            link.href = "https://www.google.com/search?q=" + encodeURIComponent(query) + "&tbm=vid";
+            link.target = "_blank";
+            link.textContent = query;
+            return link;
+        }
+        // Get the container element
+        var linksContainer = document.getElementById("links-container");
+
+        // Loop through the array and create links
+        for (var i = 0; i < stringArray.length; i++) {
+            var currentString = stringArray[i];
+            var linkElement = createGoogleSearchLink(currentString);
+            linksContainer.appendChild(linkElement);
+
+            // Add a line break after each link
+            linksContainer.appendChild(document.createElement("br"));
+        }
+
+    </script>
+</body>
+
+</html>
