@@ -12,7 +12,7 @@
 
 <body>
     <div id="links-container" class="container"></div>
-    
+
     <script>
         const stringArray = [
             "A Whiter Shade of Pale (Annie Lennox version)",
@@ -66,21 +66,30 @@
             var link = document.createElement("a");
             link.href = "https://www.google.com/search?q=" + encodeURIComponent(query) + "&tbm=vid";
             link.target = "_blank";
+            link.style.display = "block"
             link.textContent = query;
             return link;
         }
         // Get the container element
         var linksContainer = document.getElementById("links-container");
 
+        // Create an ordered list element
+        var orderedList = document.createElement("ol");
+
         // Loop through the array and create links
         for (var i = 0; i < stringArray.length; i++) {
             var currentString = stringArray[i];
             var linkElement = createGoogleSearchLink(currentString);
-            linksContainer.appendChild(linkElement);
+            // Create list item (li) for each link
+            var listItem = document.createElement("li");
+            listItem.appendChild(linkElement);
 
-            // Add a line break after each link
-            linksContainer.appendChild(document.createElement("br"));
+            // Append list item to the ordered list
+            orderedList.appendChild(listItem);
         }
+
+        // Append the ordered list to the container
+        linksContainer.appendChild(orderedList);
 
     </script>
 </body>
