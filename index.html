@@ -60,6 +60,18 @@
     .navbar img:not(:last-child) {
       margin-right: var(--margin-right)
     }
+
+    td > * > img {
+      width: 18px;
+      height: auto;
+    }
+
+    .copyButton {
+      background-color: transparent;
+      border: none;
+      margin: 0;
+      padding: 0;
+    }
   </style>
 
 </head>
@@ -90,9 +102,15 @@
       <tfoot>
         <tr>
           <td class="text-secondary text-end" colspan="3">
-            /usr/local/etc/nginx/nginx.conf
+            <span id="nginx-location">
+              /usr/local/etc/nginx/nginx.conf
+            </span>
+            <a href="vscode://file/usr/local/etc/nginx/nginx.conf"><img src="/svgs/menu-svgrepo-com.svg"></a>
             <br />
-            sudo brew services restart nginx
+            <span id="nginx-restart">
+              sudo brew services restart nginx
+            </span>
+            <button class="copyButton" data-clipboard-target="#nginx-restart"><img src="/svgs/copy-svgrepo-com.svg"></button>
             <br />
           </td>
         </tr>
@@ -100,6 +118,21 @@
     </table>
   </main>
 </body>
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@latest/dist/clipboard.min.js"></script>
+<script>
+  var clipboard = new ClipboardJS('.copyButton');
+
+  clipboard.on('success', function (e) {
+    console.log('Text copied to clipboard:', e.text);
+    alert('Text copied to clipboard: ' + e.text);
+  });
+
+  clipboard.on('error', function (e) {
+    console.error('Failed to copy text:', e.action);
+    alert('Failed to copy text. Please try again.');
+  });
+</script>
 
 <script>
   "use strict"
