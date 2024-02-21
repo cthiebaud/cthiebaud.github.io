@@ -92,7 +92,7 @@
           <!-- th>#</!-->
           <th class="text-center">Domain</th>
           <th class="text-center">Local</th>
-          <th class="text-center">Github</th>
+          <th class="text-center">Links</th>
         </tr>
       </thead>
       <tbody id="domains">
@@ -119,7 +119,7 @@
     "aequologica.net": { gh: "aequologica/aequologica.github.io", local: 8080 },
     "covid.aequologica.net": { gh: "covid-aequologica-net/covid-aequologica-net.github.io", local: 4040 },
     "cthiebaud.com": { gh: "cthiebaud/cthiebaud.github.io", local: 5050 },
-    "aletheia.cthiebaud.com": { gh: "cthiebaud/truth", local: 9090 },
+    "aletheia.cthiebaud.com": { gh: "cthiebaud/truth", local: 9090, apple: "https://appstoreconnect.apple.com/apps", google: "https://play.google.com/console/developers/7840214153383499948/app-list" },
     "bookshelves.cthiebaud.com": { gh: "cthiebaud/bookshelves", local: 2345 },
     "ciaccona.cthiebaud.com": { gh: "musicollator/ciaccona", local: 1010 },
     "emugnier.cthiebaud.com": { gh: "cthiebaud/emugnier", local: 6060 },
@@ -135,7 +135,18 @@
     return Object.prototype.toString.call(obj) === "[object Array]"
   }
 
-  function createTD(names, hrefGenerator, imgSrc, clazz) {
+  function url2svg(url) {
+    if (url.includes("github.com")) {
+      return "/svgs/github.svg"
+    } else if (url.includes("apple.com")) {
+      return "/svgs/Apple_logo_grey.svg"
+    } else if (url.includes("google.com")) {
+      return "/svgs/android-svgrepo-com.svg"
+    }
+    return null
+  }
+
+  function createTD(names, hrefGenerator, clazz) {
     let td = document.createElement('td')
     if (clazz) {
       td.classList.add(clazz)
@@ -144,23 +155,33 @@
       names = [names]
     }
     names.forEach(name => {
+      if (!name) return
       let child
+      child = document.createElement('a')
+      let href
       if (hrefGenerator && name !== "cthiebaud.com") {
-        child = document.createElement('a')
-        if (imgSrc) {
-          let img = document.createElement('img')
-          img.setAttribute('src', imgSrc)
-          img.setAttribute('style', "width:24px; height:auto;")
-          child.appendChild(img)
+        if (!(typeof name === 'string' || name instanceof String)) {
+          href = hrefGenerator(name)
+        } else if (!name.includes("http")) {
+          href = hrefGenerator(name)
         } else {
-          child.textContent = name
+        href = name
         }
-        child.setAttribute('href', hrefGenerator(name))
-        child.setAttribute('target', `_blank`)
       } else {
-        child = document.createElement('span')
+        href = name
+      }
+
+      const imgSrc = url2svg(href)
+      if (imgSrc) {
+        let img = document.createElement('img')
+        img.setAttribute('src', imgSrc)
+        img.setAttribute('style', "width:24px; height:auto;")
+        child.appendChild(img)
+      } else {
         child.textContent = name
       }
+      child.setAttribute('href', href)
+      child.setAttribute('target', `_blank`)
       td.appendChild(child)
     })
     return td
@@ -170,8 +191,8 @@
     let tr = document.createElement('tr')
     // tr.appendChild(createTD(index))
     tr.appendChild(createTD(domainName, value.page ? n => `https://${n}/${value.page}` : n => `https://${n}`))
-    tr.appendChild(createTD(value.local, value.page ? n => `http://localhost:${n}/${value.page}` : n => `http://localhost:${n}`, undefined, "text-center"))
-    tr.appendChild(createTD(value.gh, n => `https://github.com/${n}`, "/svgs/github.svg", "text-center"))
+    tr.appendChild(createTD(value.local, value.page ? n => `http://localhost:${n}/${value.page}` : n => `http://localhost:${n}`, "text-center"))
+    tr.appendChild(createTD([value.gh, value.apple, value.google], n => `https://github.com/${n}`, "text-center"))
     return tr
   }
   const tbody = document.querySelector('#domains')
