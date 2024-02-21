@@ -49,13 +49,8 @@
     th:first-child {
       text-align: right !important;
     }
-
-    main img {
-      filter: invert();
-    }
-
-    .navbar img:hover {
-      /* filter: blur(1px); */
+    td:last-child a {
+      padding: 0 .25rem;
     }
 
     .navbar img {
@@ -132,10 +127,19 @@
 
   // utility functions
   function isArray(obj) {
-    return Object.prototype.toString.call(obj) === "[object Array]"
+    if (!obj) return false
+    return obj.constructor === Array
+  }
+
+  function isValidString(candidate) {
+    if (!candidate) return false
+    return (typeof candidate === 'string' || candidate instanceof String)
   }
 
   function url2svg(url) {
+    if (!isValidString(url)) {
+      return null
+    }
     if (url.includes("github.com")) {
       return "/svgs/github.svg"
     } else if (url.includes("apple.com")) {
@@ -144,6 +148,19 @@
       return "/svgs/android-svgrepo-com.svg"
     }
     return null
+  }
+
+  function generatehref(name, hrefGenerator) {
+    if (name === "cthiebaud.com") {
+      return null
+    }
+    if (isValidString(name) && name.includes("http")) {
+      return name
+    }
+    if (hrefGenerator) {
+      return hrefGenerator(name)
+    }
+    return name
   }
 
   function createTD(names, hrefGenerator, clazz) {
@@ -156,21 +173,15 @@
     }
     names.forEach(name => {
       if (!name) return
-      let child
-      child = document.createElement('a')
-      let href
-      if (hrefGenerator && name !== "cthiebaud.com") {
-        if (!(typeof name === 'string' || name instanceof String)) {
-          href = hrefGenerator(name)
-        } else if (!name.includes("http")) {
-          href = hrefGenerator(name)
-        } else {
-        href = name
-        }
+      const href = generatehref(name, hrefGenerator)
+      let child = document.createElement('a')
+      if (href) {
+        child = document.createElement('a')
+        child.setAttribute('href', href)
+        child.setAttribute('target', `_blank`)
       } else {
-        href = name
+        child = document.createElement('span')
       }
-
       const imgSrc = url2svg(href)
       if (imgSrc) {
         let img = document.createElement('img')
@@ -180,8 +191,6 @@
       } else {
         child.textContent = name
       }
-      child.setAttribute('href', href)
-      child.setAttribute('target', `_blank`)
       td.appendChild(child)
     })
     return td
@@ -192,7 +201,7 @@
     // tr.appendChild(createTD(index))
     tr.appendChild(createTD(domainName, value.page ? n => `https://${n}/${value.page}` : n => `https://${n}`))
     tr.appendChild(createTD(value.local, value.page ? n => `http://localhost:${n}/${value.page}` : n => `http://localhost:${n}`, "text-center"))
-    tr.appendChild(createTD([value.gh, value.apple, value.google], n => `https://github.com/${n}`, "text-center"))
+    tr.appendChild(createTD([value.apple, value.google, value.gh], n => `https://github.com/${n}`, "text-end"))
     return tr
   }
   const tbody = document.querySelector('#domains')
