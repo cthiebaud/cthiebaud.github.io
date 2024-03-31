@@ -143,6 +143,7 @@
     "covid.aequologica.net": { gh: "covid-aequologica-net/covid-aequologica-net.github.io", local: 4040 },
     "cthiebaud.com": { gh: "cthiebaud/cthiebaud.github.io", local: 5050 },
     "aletheia.cthiebaud.com": { gh: "cthiebaud/truth", local: 9090, apple: "https://apps.apple.com/us/app/aletheia-by-%C3%A6quologica/id6476017817", google: "https://play.google.com/store/apps/details?id=com.cthiebaud.aletheia.twa" },
+    "reservoir2.cthiebaud.com": { gh: "cthiebaud/truth-reservoir", local: 8080, google: "https://console.firebase.google.com/project/aletheia-8c78f/database/aletheia-8c78f-default-rtdb/data/~2Fscores"},
     "bookshelves.cthiebaud.com": { gh: "cthiebaud/bookshelves", local: 2345 },
     "ciaccona.cthiebaud.com": { gh: "musicollator/ciaccona", local: 1010 },
     "emugnier.cthiebaud.com": { gh: "cthiebaud/emugnier", local: 6060 },
@@ -172,6 +173,8 @@
       return "/svgs/github.svg"
     } else if (url.includes("apple.com")) {
       return "/svgs/Apple_logo_grey.svg"
+    } else if (url.includes("firebase.google.com/")) {
+      return "/svgs/firebase-svgrepo-com.svg"
     } else if (url.includes("google.com")) {
       return "/svgs/android-svgrepo-com.svg"
     }
