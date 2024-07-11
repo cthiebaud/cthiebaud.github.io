@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Concert Program</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@latest/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding: 20px;
+        }
+        .concert-program {
+            margin-top: 20px;
+        }
+        .performer-item {
+            margin-bottom: 20px;
+        }
+        .program-item {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1 class="text-center">Concert Program</h1>
+    <div id="concert-program" class="concert-program"></div>
+</div>
+
+<script>
+    // Data Structures
+    const artists = [
+        { id: 0, name: 'Artist A' },
+        { id: 1, name: 'Artist B' },
+        { id: 2, name: 'Artist C' }
+    ];
+
+    const performers = [
+        { id: 0, name: 'Performer 1' },
+        { id: 1, name: 'Performer 2' },
+        { id: 2, name: 'Performer 3' }
+    ];
+
+    const songs = [
+        { id: 0, title: 'Fortnight', artist: 0, duration: 4, url: "https://youtu.be/q3zqJs7JUCQ" },
+        { id: 1, title: 'Song 2', artist: 1, duration: 3, url: "https://example.com/song2" },
+        { id: 2, title: 'Song 3', artist: 2, duration: 4, url: "https://example.com/song3" },
+        { id: 3, title: 'Song 4', artist: 1, duration: 5, url: "https://example.com/song4" }
+    ];
+
+    const program = [
+        { type: 'presentation', performer: 0, duration: 2 },
+        { type: 'performance', performer: 0, song: 0 },
+        { type: 'performance', performer: 0, song: 3 },
+        { type: 'presentation', performer: 1, duration: 3 },
+        { type: 'performance', performer: 1, song: 1 },
+        { type: 'presentation', performer: 2, duration: 1 },
+        { type: 'performance', performer: 2, song: 2 }
+    ];
+
+    // Starting time of the concert
+    const concertStartTime = new Date('2024-08-18T21:30:00'); // Set your desired start time here
+
+    // Function to format time
+    function formatTime(date) {
+        return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    }
+
+    // Function to get artist by ID
+    function getArtistById(id) {
+        return artists.find(artist => artist.id === id);
+    }
+
+    // Function to get performer by ID
+    function getPerformerById(id) {
+        return performers.find(performer => performer.id === id);
+    }
+
+    // Function to get song by ID
+    function getSongById(id) {
+        return songs.find(song => song.id === id);
+    }
+
+    // Function to render the program
+    function renderProgram() {
+        const programContainer = document.getElementById('concert-program');
+        programContainer.innerHTML = '';
+
+        let currentTime = new Date(concertStartTime);
+
+        // Group program items by performer
+        const performerPrograms = {};
+        program.forEach(item => {
+            if (!performerPrograms[item.performer]) {
+                performerPrograms[item.performer] = [];
+            }
+            performerPrograms[item.performer].push(item);
+        });
+
+        // Render the program
+        Object.keys(performerPrograms).forEach(performerId => {
+            const performer = getPerformerById(parseInt(performerId));
+            const performerItems = performerPrograms[performerId];
+
+            // Render performer presentation and songs
+            const performerDiv = document.createElement('div');
+            performerDiv.classList.add('performer-item', 'p-3', 'border', 'rounded');
+
+            performerItems.forEach(item => {
+                if (item.type === 'presentation') {
+                    performerDiv.innerHTML += `
+                        <h4>${performer.name} - ${formatTime(currentTime)}</h4>
+                        <p><strong>Presentation Duration:</strong> ${item.duration} minutes</p>
+                    `;
+                    // Update the current time based on the presentation duration
+                    currentTime.setMinutes(currentTime.getMinutes() + item.duration);
+                } else if (item.type === 'performance') {
+                    const song = getSongById(item.song);
+                    const artist = getArtistById(song.artist);
+
+                    performerDiv.innerHTML += `
+                        <div class="program-item">
+                            <p><strong>Song:</strong> <a href="${song.url}" target="_blank">${song.title}</a></p>
+                            <p><strong>Artist:</strong> ${artist.name}</p>
+                            <p><strong>Duration:</strong> ${song.duration} minutes</p>
+                        </div>
+                    `;
+                    // Update the current time based on the song duration
+                    currentTime.setMinutes(currentTime.getMinutes() + song.duration);
+                }
+            });
+
+            programContainer.appendChild(performerDiv);
+        });
+    }
+
+    // Initial render
+    renderProgram();
+</script>
+
+</body>
+</html>

@@ -1,123 +1,196 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-
+    <title>Thiebaud & Friends</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@latest/dist/css/bootstrap.min.css" rel="stylesheet">
-
+    <style>
+        body {
+            padding: 20px;
+        }
+        .concert-program {
+            margin-top: 20px;
+        }
+        .performer-item {
+            margin-bottom: 20px;
+        }
+        .program-item {
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
-
 <body>
-    <div id="links-container" class="container"></div>
 
-    <script>
-        const stringArray = [
-            "A Whiter Shade of Pale (Annie Lennox version)",
-            "Acqua e sale (Mina & Celentano)",
-            "Almeno tu nell'universo (Mia Martini)",
-            "At Last (Etta James)", 
-            "Billie Jean (Michael Jackson)",
-            "Could It Be Magic (Donna Summer)",
-            "Cymbaline (Pink Floyd)",
-            "Dancing Queen (ABBA)",
-            "Days Of Pearly Spencer (David McWilliams)",
-            "Désenchantée (Mylène Farmer)",
-            "En rouge et noir (Jeanne Mas)",
-            "Encore un soir (Céline Dion)",
-            "Get It On (T-Rex)",
-            "Heart Of Glass (Blondie)",
-            "Heaven Is 10 Zillion Light Years Away (Stevie Wonder)",
-            "Heroes (David Bowie)",
-            "Hey Jude (The Beatles)",
-            "Honky Tonk Women (The Rolling Stones)",
-            "House of the Rising Sun (The Animals)",
-            "I Feel Love (Donna Summer)",
-            "Je suis venu te dire que je m'en vais (Serge Gainsbourg)",
-            "Je t'aime moi non plus (Brigitte Bardot)",
-            "Jumpin' Jack Flash (The Rolling Stones)",
-            "L'été indien (Joe Dassin)",
-            "La Javanaise (Serge Gainsbourg)",
-            "Lady D'Arbanville (Cat Stevens)",
-            "Libertango / I've Seen That Face Before (Astor Piazzolla / Grace Jones)",
-            "Life on Mars (David Bowie)",
-            "Little Wing (Jimi Hendrix)",
-            "Luiza (Antonio Carlos Jobim)",
-            "Michelle (The Beatles)",
-            "Oblivion (Astor Piazzolla)",
-            "Ode To Billie Joe (Bobbie Gentry)",
-            "Old Man (Neil Young)",
-            "One for My Baby (Etta James)",
-            "Paradoxal Système (Laurent Voulzy)",
-            "Pendant que les champs brûlent (Niagara)",
-            "Pour que tu m'aimes encore (Céline Dion)",
-            "Slave to the Rhythm (Grace Jones)",
-            "Solo Tu (Matia Bazar)",
-            "Sunny (Bobby Hebb)",
-            "Super Freak (Rick James)",
-            "Superstition (Stevie Wonder)",
-            "Suzanne (Leonard Cohen)",
-            "Sweet Dreams (Annie Lennox)",
-            "The Joker (Steve Miller Band)",
-            "The Locomotion (Little Eva)",
-            "Un homme et une femme (Francis Lai)",
-            "Upside Down (Diana Ross)",
-            "Uptown Funk (Mark Ronson)",
-            "Walk On the Wild Side (Lou Reed)",
-        ]
+<div class="container">
+    <h1 class="text-center">Thiebaud & Friends</h1>
+    <div id="concert-program" class="concert-program"></div>
+</div>
 
-        function sortByStringInParenthesis(a, b) {
-            // Extract strings within parenthesis
-            const regex = /\(([^)]+)\)/;
-            const stringInParenthesisA = a.match(regex)[1];
-            const stringInParenthesisB = b.match(regex)[1];
+<script>
+    // Data Structures
+    const artists = [
+        { id: 0, name: 'Taylor Swift' },
+        { id: 1, name: 'Tosca' },
+        { id: 2, name: 'Procol Harum / Annie Lennox' },
+        { id: 3, name: 'Georges Brassens' },
+        { id: 4, name: 'Emilio Panizio' },
+        { id: 5, name: 'Johann Sebastian Bach' },
+        { id: 6, name: 'Jimi Hendrix' },
+        { id: 7, name: 'Black Sabbath' },
+        { id: 8, name: 'Christophe Thiebaud' },
+        { id: 9, name: 'Eric Mugnier' },
+        { id: 10, name: "Umberto D'Aloise" },
+    ];
 
-            // Compare the strings
-            if (stringInParenthesisA < stringInParenthesisB) {
-                return -1;
-            } else if (stringInParenthesisA > stringInParenthesisB) {
-                return 1;
-            } else {
-                return 0;
+    const performers = [
+        { id: 0, name: 'Antonino' },
+        { id: 1, name: 'Enrica' },
+        { id: 2, name: 'Jacques' },
+        { id: 3, name: 'Marco' },
+        { id: 4, name: 'Martedì Canzonette' },
+        { id: 5, name: 'Nicola' },
+        { id: 6, name: 'Theo' },
+        { id: 7, name: 'Umberto' },
+        { id: 8, name: 'Christophe', desc: "⚠️ solo 1 o 2 pezzi tra questi: (in ordine di preferenza/fattibilità) ⚠️" },
+    ]
+
+    const songs = [
+        { id: 0, title: 'Fortnight', artist: 0, duration: 4, url: "https://youtu.be/q3zqJs7JUCQ" },
+        { id: 1, title: 'Ho amato tutto', artist: 1, duration: 4, url: "https://youtu.be/lM04HIC3NL8" },
+        { id: 2, title: 'A Whiter Shade of Pale', artist: 2, duration: 5, url: "https://youtu.be/VZqPoriYXho" },
+        { id: 3, title: 'Les Passantes', artist: 3, duration: 5, url: "https://youtu.be/t0o21TWxNAw" },
+        { id: 4, title: 'La Marine', artist: 3, duration: 3, url: "https://youtu.be/bjMy7VpyhPc" },
+        { id: 5, title: 'Les Illusions Perdues', artist: 3, duration: 2, url: "https://youtu.be/TqTvYKp4cGk" },
+        { id: 6, title: 'La Casa di J-Ax', artist: 4, duration: 3, url: "https://youtu.be/psu1Po-bPGE" },
+        { id: 7, title: 'Ok, ok, etc.', artist: 4, duration: 3, url: null },
+        { id: 17, title: 'tbd', artist: 4, duration: 3, url: null },
+        { id: 8, title: 'Air sur la corde de sol [2e mouvement de la suite orchestrale no 3 en ré majeur BWV 1068]', artist: 5, duration: 4, url: "https://youtu.be/Hyvc1mdhAzA" },
+        { id: 18, title: 'sans titre', artist: 10, duration: 6, url: null },
+        { id: 9, title: 'Little Wing', artist: 6, duration: 5, url: null },
+        { id: 10, title: 'Medley TBD', artist: 7, duration: 5, url: null },
+
+        { id: 11, title: 'Larme', artist: 8, duration: 5, url: "https://youtu.be/Zk_YubAnJmM" },
+        { id: 12, title: 'Matsubaba', artist: 9, duration: 5, url: "https://youtu.be/OZuS8QQsQK8" },
+        { id: 13, title: 'Le Bateau ivre', artist: 8, duration: 5, url: "https://youtu.be/a3Ek2EYkGsw" },
+        { id: 14, title: 'Après « Les filles du botaniste »', artist: 8, duration: 5, url: "https://youtu.be/i8_9mvtQetY" },
+        { id: 15, title: 'Sensation', artist: 8, duration: 5, url: "https://youtu.be/l_bjho9aLRE" },
+        { id: 16, title: 'Nous Partirons', artist: 8, duration: 5, url: "https://youtu.be/8VOp8qk9-a4" },
+        
+    ];
+
+    const program = [
+        { type: 'presentation', performer: 1, duration: 2 },
+        { type: 'performance', performer: 1, song: 0 },
+        { type: 'performance', performer: 1, song: 1 },
+        { type: 'performance', performer: 1, song: 2 },
+        { type: 'presentation', performer: 2, duration: 5 },
+        { type: 'performance', performer: 2, song: 3 },
+        { type: 'performance', performer: 2, song: 4 },
+        { type: 'performance', performer: 2, song: 5 },
+        { type: 'presentation', performer: 4, duration: 6 },
+        { type: 'performance', performer: 4, song: 6 },
+        { type: 'performance', performer: 4, song: 7 },
+        { type: 'performance', performer: 4, song: 17 },
+        { type: 'presentation', performer: 7, duration: 5 },
+        { type: 'performance', performer: 7, song: 8 },
+        { type: 'performance', performer: 7, song: 18 },
+        { type: 'presentation', performer: 5, duration: 5 },
+        { type: 'performance', performer: 5, song: 9 },
+        { type: 'presentation', performer: 6, duration: 5 },
+        { type: 'performance', performer: 6, song: 10 },
+        { type: 'presentation', performer: 8, duration: 5 },
+        { type: 'performance', performer: 8, song: 11 },
+        { type: 'performance', performer: 8, song: 12 },
+        { type: 'performance', performer: 8, song: 13 },
+        { type: 'performance', performer: 8, song: 14 },
+        { type: 'performance', performer: 8, song: 15 },
+        { type: 'performance', performer: 8, song: 16 },
+    ];
+
+    // Starting time of the concert
+    const concertStartTime = new Date('2024-08-18T21:30:00'); // Set your desired start time here
+
+    // Function to format time
+    function formatTime(date) {
+        return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    }
+
+    // Function to get artist by ID
+    function getArtistById(id) {
+        return artists.find(artist => artist.id === id);
+    }
+
+    // Function to get performer by ID
+    function getPerformerById(id) {
+        return performers.find(performer => performer.id === id);
+    }
+
+    // Function to get song by ID
+    function getSongById(id) {
+        return songs.find(song => song.id === id);
+    }
+
+    // Function to render the program
+    function renderProgram() {
+        const programContainer = document.getElementById('concert-program');
+        programContainer.innerHTML = '';
+
+        let currentTime = new Date(concertStartTime);
+
+        // Group program items by performer
+        const performerPrograms = {};
+        program.forEach(item => {
+            if (!performerPrograms[item.performer]) {
+                performerPrograms[item.performer] = [];
             }
-        }
+            performerPrograms[item.performer].push(item);
+        });
 
-        function createGoogleSearchLink(query) {
-            var link = document.createElement("a");
-            link.href = "https://www.google.com/search?q=" + encodeURIComponent(query) + "&tbm=vid";
-            link.target = "_blank";
-            link.style.display = "block"
-            link.textContent = query;
-            return link;
-        }
+        // Render the program
+        Object.keys(performerPrograms).forEach(performerId => {
+            const performer = getPerformerById(parseInt(performerId));
+            const performerItems = performerPrograms[performerId];
 
-        // Get the container element
-        var linksContainer = document.getElementById("links-container");
+            // Render performer presentation and songs
+            const performerDiv = document.createElement('div');
+            performerDiv.classList.add('performer-item', 'p-3', 'border', 'rounded');
 
-        // Create an ordered list element
-        var orderedList = document.createElement("ol");
+            performerItems.forEach(item => {
+                if (item.type === 'presentation') {
+                    const descHTML = performer.desc ? `<h5><i>${performer.desc}</i></h5>` : "";
+                    performerDiv.innerHTML += `
+                        <h4>${performer.name} - ${formatTime(currentTime)}</h4>
+                        <!-- p><strong>Presentation Duration:</strong> ${item.duration} minutes</!-->
+                        ${descHTML}
+                    `;
+                    // Update the current time based on the presentation duration
+                    currentTime.setMinutes(currentTime.getMinutes() + item.duration);
+                } else if (item.type === 'performance') {
+                    const song = getSongById(item.song);
+                    const artist = getArtistById(song.artist);
 
-        // Sort the array using the custom sorting function
-        stringArray.sort(sortByStringInParenthesis);
+                    const songHTML = song.url ? `<a href="${song.url}" target="_blank">${song.title}</a>` : song.title
 
-        // Loop through the array and create links
-        for (var i = 0; i < stringArray.length; i++) {
-            var currentString = stringArray[i];
-            var linkElement = createGoogleSearchLink(currentString);
-            // Create list item (li) for each link
-            var listItem = document.createElement("li");
-            listItem.appendChild(linkElement);
+                    performerDiv.innerHTML += `
+                        <div class="program-item">
+                            <hr>
+                            <p>${songHTML} (${artist.name})</p>
+                            <p>${song.duration} minutes</p>
+                        </div>
+                    `;
+                    // Update the current time based on the song duration
+                    currentTime.setMinutes(currentTime.getMinutes() + song.duration);
+                }
+            });
 
-            // Append list item to the ordered list
-            orderedList.appendChild(listItem);
-        }
+            programContainer.appendChild(performerDiv);
+        });
+    }
 
-        // Append the ordered list to the container
-        linksContainer.appendChild(orderedList);
+    // Initial render
+    renderProgram();
+</script>
 
-    </script>
 </body>
-
 </html>
