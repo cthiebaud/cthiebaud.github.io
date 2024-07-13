@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Evaluation Results</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@latest/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Project Evaluation Results</h1>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead class="table-dark">
+                    <tr id="criteria-header">
+                        <th>Project Name</th>
+                    </tr>
+                </thead>
+                <tbody id="results-body">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Custom Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const projects = [
+                "1 dhbw-java-project-main",
+                "2 uni-project-password-game-main",
+                "3 tictactoe",
+                "4 knapsack-problem-solver",
+                "5 TicTacToe",
+                "6 BubbleSort",
+                "7 Minesweeper-Web-App-master",
+                "8 sudokusolver-master",
+                "9 AahilMohammad_LuisBrenner_FabioSapia_ProgrammingPortfolio"
+            ];
+            const criteria = ["Documentation", "Ease of Execution", "Use of Generics", "Use of Concurrency/Web Application", "Use of Algorithm", "Use of Interface", "General"];
+            const results = [
+                ["A", "A", "C", "C", "B", "B", "A"],
+                ["A", "A", "D", "C", "B", "A", "A"],
+                ["C", "A", "E", "E", "C", "E", "C"],
+                ["E", "D", "E", "E", "E", "E", "C"],
+                ["A", "B", "C", "B", "B", "B", "B"],
+                ["A", "A", "C", "C", "B", "C", "B"],
+                ["B", "A", "C", "C", "D", "C", "B"],
+                ["A", "A", "B", "E", "C", "A", "B"],
+                ["B", "A", "B", "B", "B", "C", "A"]
+            ];
+
+            const criteriaHeader = document.getElementById('criteria-header');
+            criteria.forEach(criterion => {
+                const th = document.createElement('th');
+                th.textContent = criterion;
+                criteriaHeader.appendChild(th);
+            });
+
+            const resultsBody = document.getElementById('results-body');
+            projects.forEach((project, index) => {
+                const tr = document.createElement('tr');
+                const tdProjectName = document.createElement('td');
+                tdProjectName.textContent = project;
+                tr.appendChild(tdProjectName);
+
+                results[index].forEach(result => {
+                    const tdResult = document.createElement('td');
+                    tdResult.textContent = result;
+                    tr.appendChild(tdResult);
+                });
+
+                resultsBody.appendChild(tr);
+            });
+        });
+    </script>
+</body>
+</html>
