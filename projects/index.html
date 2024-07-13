@@ -12,6 +12,10 @@
             padding: 0; /* Optional: Removes the default padding */
             margin: 0; /* Optional: Removes the default margin */
         }
+
+        th {
+            font-size: smaller;
+        }
     </style>    
 </head>
 <body>
@@ -35,7 +39,7 @@
             <li>D: Poor</li>
             <li>E: Fail</li>
         </ul>
-        </div>
+    </div>
 
     <!-- Custom Script -->
     <script>
@@ -54,15 +58,24 @@
             const criteria = ["Documentation", "Ease of Execution", "Use of Generics", "Use of Concurrency/Web Application", "Use of Algorithm", "Use of Interface", "My (irrationnal) feeling about the project"];
             const results = [
                 ["A", "A", "C", "C", "B", "B", "A"],
-                ["A", "A", "D", "C", "B", "A", "A"],
+                ["A", "A", "D", "C", "B", "A", "A+"],
                 ["C", "A", "E", "E", "C", "E", "C"],
-                ["E", "D", "E", "E", "E", "E", "C"],
-                ["A", "B", "C", "B", "C", "B", "B"],
+                ["E", "C", "E", "E", "E", "E", "D"],
+                ["A", "B", "C", "B", "C", "C", "B"],
                 ["A", "A", "C", "C", "B", "C", "B"],
                 ["B", "A", "C", "C", "D", "C", "B"],
-                ["A", "A", "B", "E", "C", "A", "B"],
-                ["B", "A", "B", "B", "B", "C", "A"]
+                ["A", "A", "B", "E", "C", "A", "C"],
+                ["B", "A", "B", "D", "C", "C", "B"]
             ];
+            
+            const gradeMapping = {
+                "A+": 12,
+                "A": 10,
+                "B": 8,
+                "C": 6,
+                "D": 4,
+                "E": 2
+            };
 
             const criteriaHeader = document.getElementById('criteria-header');
             criteria.forEach(criterion => {
@@ -70,6 +83,11 @@
                 th.textContent = criterion;
                 criteriaHeader.appendChild(th);
             });
+            
+            // Add the "Mean Evaluation" column header
+            const thMean = document.createElement('th');
+            thMean.textContent = "Mean Evaluation";
+            criteriaHeader.appendChild(thMean);
 
             const resultsBody = document.getElementById('results-body');
             projects.forEach((project, index) => {
@@ -78,11 +96,23 @@
                 tdProjectName.textContent = project;
                 tr.appendChild(tdProjectName);
 
+                let totalScore = 0;
                 results[index].forEach(result => {
                     const tdResult = document.createElement('td');
                     tdResult.textContent = result;
                     tr.appendChild(tdResult);
+                    
+                    // Add the mapped score to totalScore
+                    totalScore += gradeMapping[result];
                 });
+
+                // Calculate the mean evaluation score
+                const meanScore = Math.round(totalScore / results[index].length);
+
+                // Create the cell for mean evaluation
+                const tdMean = document.createElement('td');
+                tdMean.textContent = meanScore.toFixed(0) + "/10"; // Keeping two decimal places
+                tr.appendChild(tdMean);
 
                 resultsBody.appendChild(tr);
             });
