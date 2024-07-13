@@ -18,6 +18,9 @@
         .program-item {
             margin-bottom: 10px;
         }
+        .optional {
+            color: lightgray;
+        }
     </style>
 </head>
 <body>
@@ -56,56 +59,62 @@
     ]
 
     const songs = [
-        { id: 0, title: 'Fortnight', artist: 0, duration: 4, url: "https://youtu.be/q3zqJs7JUCQ" },
-        { id: 1, title: 'Ho amato tutto', artist: 1, duration: 4, url: "https://youtu.be/lM04HIC3NL8" },
-        { id: 2, title: 'A Whiter Shade of Pale', artist: 2, duration: 5, url: "https://youtu.be/VZqPoriYXho" },
-        { id: 3, title: 'Les Passantes', artist: 3, duration: 5, url: "https://youtu.be/t0o21TWxNAw" },
-        { id: 4, title: 'La Marine', artist: 3, duration: 3, url: "https://youtu.be/bjMy7VpyhPc" },
-        { id: 5, title: 'Les Illusions Perdues', artist: 3, duration: 2, url: "https://youtu.be/TqTvYKp4cGk" },
-        { id: 6, title: 'La Casa di J-Ax', artist: 4, duration: 3, url: "https://youtu.be/psu1Po-bPGE" },
-        { id: 7, title: 'Ok, ok, etc.', artist: 4, duration: 3, url: null },
-        { id: 17, title: 'tbd', artist: 4, duration: 3, url: null },
-        { id: 8, title: 'Air sur la corde de sol [2e mouvement de la suite orchestrale no 3 en ré majeur BWV 1068]', artist: 5, duration: 4, url: "https://youtu.be/Hyvc1mdhAzA" },
-        { id: 18, title: 'sans titre', artist: 10, duration: 6, url: null },
-        { id: 9, title: 'Little Wing', artist: 6, duration: 5, url: null },
-        { id: 10, title: 'Medley TBD', artist: 7, duration: 5, url: null },
+        { id: 10, title: 'Fortnight', artist: 0, duration: 4, url: "https://youtu.be/q3zqJs7JUCQ" },
+        { id: 11, title: 'Ho amato tutto', artist: 1, duration: 4, url: "https://youtu.be/lM04HIC3NL8" },
+        { id: 12, title: 'A Whiter Shade of Pale', artist: 2, duration: 5, url: "https://youtu.be/VZqPoriYXho" },
 
-        { id: 11, title: 'Larme', artist: 8, duration: 5, url: "https://youtu.be/Zk_YubAnJmM" },
-        { id: 12, title: 'Matsubaba', artist: 9, duration: 5, url: "https://youtu.be/OZuS8QQsQK8" },
-        { id: 13, title: 'Le Bateau ivre', artist: 8, duration: 5, url: "https://youtu.be/a3Ek2EYkGsw" },
-        { id: 14, title: 'Après « Les filles du botaniste »', artist: 8, duration: 5, url: "https://youtu.be/i8_9mvtQetY" },
-        { id: 15, title: 'Sensation', artist: 8, duration: 5, url: "https://youtu.be/l_bjho9aLRE" },
-        { id: 16, title: 'Nous Partirons', artist: 8, duration: 5, url: "https://youtu.be/8VOp8qk9-a4" },
-        
+        { id: 20, title: 'Les Passantes', artist: 3, duration: 5, url: "https://youtu.be/t0o21TWxNAw" },
+        { id: 21, title: 'La Marine', artist: 3, duration: 3, url: "https://youtu.be/bjMy7VpyhPc" },
+        { id: 22, title: 'Le Gorille', artist: 3, duration: 3, url: "https://youtu.be/k4DUouE3D0Y" },
+        { id: 23, title: 'Les Illusions Perdues', artist: 3, duration: 2, url: "https://youtu.be/TqTvYKp4cGk", clazz: "optional"},
+
+        { id: 40, title: 'La Casa di J-Ax', artist: 4, duration: 3, url: "https://youtu.be/psu1Po-bPGE" },
+        { id: 41, title: 'Ok, ok, etc.', artist: 4, duration: 3, url: null },
+        { id: 42, title: 'tbd', artist: 4, duration: 3, url: null },
+
+        { id: 50, title: 'Little Wing', artist: 6, duration: 5, url: null },
+
+        { id: 60, title: 'Medley TBD', artist: 7, duration: 5, url: null },
+
+        { id: 70, title: 'Air sur la corde de sol [2e mouvement de la suite orchestrale no 3 en ré majeur BWV 1068]', artist: 5, duration: 4, url: "https://youtu.be/Hyvc1mdhAzA" },
+        { id: 71, title: 'sans titre', artist: 10, duration: 6, url: null },
+
+        { id: 80, title: 'Larme', artist: 8, duration: 5, url: "https://youtu.be/Zk_YubAnJmM" },
+        { id: 81, title: 'Matsubaba', artist: 9, duration: 5, url: "https://youtu.be/OZuS8QQsQK8" },
+        { id: 82, title: 'Le Bateau ivre', artist: 8, duration: 5, url: "https://youtu.be/a3Ek2EYkGsw" },
+        { id: 83, title: 'Après « Les filles du botaniste »', artist: 8, duration: 5, url: "https://youtu.be/i8_9mvtQetY" },
+        { id: 84, title: 'Sensation', artist: 8, duration: 5, url: "https://youtu.be/l_bjho9aLRE" },
+        { id: 85, title: 'Nous Partirons', artist: 8, duration: 5, url: "https://youtu.be/8VOp8qk9-a4" },
     ];
 
     const program = [
         { type: 'presentation', performer: 1, duration: 2 },
-        { type: 'performance', performer: 1, song: 0 },
-        { type: 'performance', performer: 1, song: 1 },
-        { type: 'performance', performer: 1, song: 2 },
-        { type: 'presentation', performer: 2, duration: 5 },
-        { type: 'performance', performer: 2, song: 3 },
-        { type: 'performance', performer: 2, song: 4 },
-        { type: 'performance', performer: 2, song: 5 },
+        { type: 'performance', performer: 1, song: 10 },
+        { type: 'performance', performer: 1, song: 11 },
+        { type: 'performance', performer: 1, song: 12 },
+        { type: 'presentation', performer: 2, duration: 2 },
+        { type: 'performance', performer: 2, song: 20 },
+        { type: 'performance', performer: 2, song: 21 },
+        { type: 'performance', performer: 2, song: 22 },
+        { type: 'performance', performer: 2, song: 23 },
         { type: 'presentation', performer: 4, duration: 6 },
-        { type: 'performance', performer: 4, song: 6 },
-        { type: 'performance', performer: 4, song: 7 },
-        { type: 'performance', performer: 4, song: 17 },
-        { type: 'presentation', performer: 7, duration: 5 },
-        { type: 'performance', performer: 7, song: 8 },
-        { type: 'performance', performer: 7, song: 18 },
+        { type: 'performance', performer: 4, song: 40 },
+        { type: 'performance', performer: 4, song: 41 },
+        { type: 'performance', performer: 4, song: 42 },
         { type: 'presentation', performer: 5, duration: 5 },
-        { type: 'performance', performer: 5, song: 9 },
+        { type: 'performance', performer: 5, song: 50 },
         { type: 'presentation', performer: 6, duration: 5 },
-        { type: 'performance', performer: 6, song: 10 },
+        { type: 'performance', performer: 6, song: 60 },
         { type: 'presentation', performer: 8, duration: 5 },
-        { type: 'performance', performer: 8, song: 11 },
-        { type: 'performance', performer: 8, song: 12 },
-        { type: 'performance', performer: 8, song: 13 },
-        { type: 'performance', performer: 8, song: 14 },
-        { type: 'performance', performer: 8, song: 15 },
-        { type: 'performance', performer: 8, song: 16 },
+        { type: 'presentation', performer: 7, duration: 5 },
+        { type: 'performance', performer: 7, song: 70 },
+        { type: 'performance', performer: 7, song: 71 },
+        { type: 'performance', performer: 8, song: 80 },
+        { type: 'performance', performer: 8, song: 81 },
+        { type: 'performance', performer: 8, song: 82 },
+        { type: 'performance', performer: 8, song: 83 },
+        { type: 'performance', performer: 8, song: 84 },
+        { type: 'performance', performer: 8, song: 85 },
     ];
 
     // Starting time of the concert
@@ -170,10 +179,10 @@
                     const song = getSongById(item.song);
                     const artist = getArtistById(song.artist);
 
-                    const songHTML = song.url ? `<a href="${song.url}" target="_blank">${song.title}</a>` : song.title
+                    const songHTML = song.url && !song.clazz ? `<a href="${song.url}" target="_blank">${song.title}</a>` : song.title
 
                     performerDiv.innerHTML += `
-                        <div class="program-item">
+                        <div class="program-item ${song.clazz}">
                             <hr>
                             <p>${songHTML} (${artist.name})</p>
                             <p>${song.duration} minutes</p>
