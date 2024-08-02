@@ -44,6 +44,7 @@
         { id: 8, name: 'Christophe Thiebaud' },
         { id: 9, name: 'Eric Mugnier' },
         { id: 10, name: "Umberto D'Aloise" },
+        { id: 11, name: "Tom Jobim" },
     ];
 
     const performers = [
@@ -55,23 +56,24 @@
         { id: 5, name: 'Nicola' },
         { id: 6, name: 'Theo' },
         { id: 7, name: 'Umberto' },
-        { id: 8, name: 'Christophe', desc: "⚠️ solo 1 o 2 pezzi tra questi: (in ordine di preferenza/fattibilità) ⚠️" },
+        { id: 8, name: 'Christophe' /* , desc: "⚠️ solo 1 o 2 pezzi tra questi: (in ordine di preferenza/fattibilità) ⚠️" */ },
     ]
 
     const songs = [
         { id: 10, title: 'Fortnight', artist: 0, duration: 4, url: "https://youtu.be/q3zqJs7JUCQ" },
         { id: 11, title: 'Ho amato tutto', artist: 1, duration: 4, url: "https://youtu.be/lM04HIC3NL8" },
         { id: 12, title: 'A Whiter Shade of Pale', artist: 2, duration: 5, url: "https://youtu.be/VZqPoriYXho" },
+        { id: 13, title: 'Luiza', artist:11, duration: 3, url: "https://youtu.be/3t9Zw-H6kb4" },
 
         { id: 20, title: 'Les Passantes', artist: 3, duration: 5, url: "https://youtu.be/t0o21TWxNAw" },
         { id: 21, title: 'La Marine', artist: 3, duration: 3, url: "https://youtu.be/bjMy7VpyhPc" },
         { id: 22, title: 'Le Gorille', artist: 3, duration: 3, url: "https://youtu.be/k4DUouE3D0Y" },
-        { id: 23, title: 'Les Illusions Perdues', artist: 3, duration: 2, url: "https://youtu.be/TqTvYKp4cGk", clazz: "optional"},
+        { id: 23, title: 'Les Illusions Perdues', artist: 3, duration: 2, url: "https://youtu.be/TqTvYKp4cGk"},
 
         { id: 39, title: 'Blues della Casa Sola', artist: 4, duration: 4, url: "https://youtu.be/RSVPQ9Yfo5w" },
         { id: 40, title: 'La Casa di J-Ax', artist: 4, duration: 3, url: "https://youtu.be/psu1Po-bPGE" },
         { id: 41, title: 'Ok, ok, etc.', artist: 4, duration: 3, url: "https://youtu.be/Cc9X8fQxZi4" },
-        { id: 42, title: 'A Berlino Stasera', artist: 4, duration: 3, url: "https://youtu.be/yX32RH74cZA" },
+        { id: 42, title: 'A Berlino Stasera', artist: 4, duration: 3, url: "https://youtu.be/yX32RH74cZA", clazz: "optional" },
 
         { id: 50, title: 'Little Wing', artist: 6, duration: 5, url: null },
 
@@ -89,14 +91,13 @@
     ];
 
     const program = [
-        { type: 'presentation', performer: 1, duration: 2 },
+        { type: 'presentation', performer: 1, duration: 4 },
         { type: 'performance', performer: 1, song: 10 },
         { type: 'performance', performer: 1, song: 11 },
-        { type: 'performance', performer: 1, song: 12 },
+        { type: 'performance', performer: 1, song: 13 },
         { type: 'presentation', performer: 2, duration: 2 },
         { type: 'performance', performer: 2, song: 20 },
         { type: 'performance', performer: 2, song: 21 },
-        { type: 'performance', performer: 2, song: 22 },
         { type: 'performance', performer: 2, song: 23 },
         { type: 'presentation', performer: 4, duration: 2 },
         { type: 'performance', performer: 4, song: 39 },
@@ -109,14 +110,14 @@
         { type: 'performance', performer: 6, song: 60 },
         { type: 'presentation', performer: 8, duration: 5 },
         { type: 'presentation', performer: 7, duration: 5 },
-        { type: 'performance', performer: 7, song: 70 },
+/*        { type: 'performance', performer: 7, song: 70 }, */
         { type: 'performance', performer: 7, song: 71 },
         { type: 'performance', performer: 8, song: 80 },
         { type: 'performance', performer: 8, song: 81 },
         { type: 'performance', performer: 8, song: 82 },
-        { type: 'performance', performer: 8, song: 83 },
+        /* { type: 'performance', performer: 8, song: 83 },
         { type: 'performance', performer: 8, song: 84 },
-        { type: 'performance', performer: 8, song: 85 },
+        { type: 'performance', performer: 8, song: 85 }, */
     ];
 
     // Starting time of the concert
