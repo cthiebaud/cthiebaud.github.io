@@ -57,6 +57,8 @@
         { id: 6, name: 'Theo' },
         { id: 7, name: 'Umberto' },
         { id: 8, name: 'Christophe' /* , desc: "⚠️ solo 1 o 2 pezzi tra questi: (in ordine di preferenza/fattibilità) ⚠️" */ },
+        { id: 100, name: 'Fin' },
+        
     ]
 
     const songs = [
@@ -80,11 +82,11 @@
         { id: 60, title: 'Medley TBD', artist: 7, duration: 5, url: null },
 
         { id: 70, title: 'Air sur la corde de sol [2e mouvement de la suite orchestrale no 3 en ré majeur BWV 1068]', artist: 5, duration: 4, url: "https://youtu.be/Hyvc1mdhAzA" },
-        { id: 71, title: 'sans titre', artist: 10, duration: 6, url: null },
+        { id: 71, title: 'sans titre', artist: 10, duration: 4, url: null },
 
-        { id: 80, title: 'Larme', artist: 8, duration: 5, url: "https://youtu.be/Zk_YubAnJmM" },
-        { id: 81, title: 'Matsubaba', artist: 9, duration: 5, url: "https://youtu.be/OZuS8QQsQK8" },
-        { id: 82, title: 'Le Bateau ivre', artist: 8, duration: 5, url: "https://youtu.be/a3Ek2EYkGsw" },
+        { id: 80, title: 'Larme', artist: 8, duration: 3, url: "https://youtu.be/Zk_YubAnJmM" },
+        { id: 81, title: 'Matsubaba', artist: 9, duration: 3, url: "https://youtu.be/OZuS8QQsQK8", clazz: "optional" },
+        { id: 82, title: 'Le Bateau ivre', artist: 8, duration: 7, url: "https://youtu.be/a3Ek2EYkGsw" },
         { id: 83, title: 'Après « Les filles du botaniste »', artist: 8, duration: 5, url: "https://youtu.be/i8_9mvtQetY" },
         { id: 84, title: 'Sensation', artist: 8, duration: 5, url: "https://youtu.be/l_bjho9aLRE" },
         { id: 85, title: 'Nous Partirons', artist: 8, duration: 5, url: "https://youtu.be/8VOp8qk9-a4" },
@@ -95,7 +97,7 @@
         { type: 'performance', performer: 1, song: 10 },
         { type: 'performance', performer: 1, song: 11 },
         { type: 'performance', performer: 1, song: 13 },
-        { type: 'presentation', performer: 2, duration: 2 },
+        { type: 'presentation', performer: 2, duration: 5 },
         { type: 'performance', performer: 2, song: 20 },
         { type: 'performance', performer: 2, song: 21 },
         { type: 'performance', performer: 2, song: 23 },
@@ -108,13 +110,14 @@
         { type: 'performance', performer: 5, song: 50 },
         { type: 'presentation', performer: 6, duration: 5 },
         { type: 'performance', performer: 6, song: 60 },
-        { type: 'presentation', performer: 8, duration: 5 },
-        { type: 'presentation', performer: 7, duration: 5 },
-/*        { type: 'performance', performer: 7, song: 70 }, */
+        { type: 'presentation', performer: 7, duration: 1 },
+        /*        { type: 'performance', performer: 7, song: 70 }, */
         { type: 'performance', performer: 7, song: 71 },
+        { type: 'presentation', performer: 8, duration: 7 },
         { type: 'performance', performer: 8, song: 80 },
-        { type: 'performance', performer: 8, song: 81 },
         { type: 'performance', performer: 8, song: 82 },
+        { type: 'performance', performer: 8, song: 81 },
+        { type: 'presentation', performer: 100, duration: 0 },
         /* { type: 'performance', performer: 8, song: 83 },
         { type: 'performance', performer: 8, song: 84 },
         { type: 'performance', performer: 8, song: 85 }, */
@@ -177,7 +180,9 @@
                         ${descHTML}
                     `;
                     // Update the current time based on the presentation duration
-                    currentTime.setMinutes(currentTime.getMinutes() + item.duration);
+                    if (!item.clazz || item.clazz!=="optional") {
+                        currentTime.setMinutes(currentTime.getMinutes() + item.duration);
+                    }
                 } else if (item.type === 'performance') {
                     const song = getSongById(item.song);
                     const artist = getArtistById(song.artist);
