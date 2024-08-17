@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,225 +10,248 @@
         body {
             padding: 20px;
         }
+
         .concert-program {
             margin-top: 20px;
         }
+
         .performer-item {
             margin-bottom: 20px;
         }
+
         .program-item {
             margin-bottom: 10px;
         }
+
         .optional {
             color: lightgray;
         }
     </style>
 </head>
+
 <body>
 
-<div class="container">
-    <h1 class="text-center">Thiebaud & Friends</h1>
-    <div id="concert-program" class="concert-program"></div>
-</div>
+    <div class="container">
+        <h1 class="text-center">Thiebaud & Friends</h1>
+        <div id="concert-program" class="concert-program"></div>
+    </div>
 
-<script>
-    // Data Structures
-    const artists = [
-        { id: 0, name: 'Taylor Swift' },
-        { id: 1, name: 'Tosca' },
-        { id: 2, name: 'Procol Harum / Annie Lennox' },
-        { id: 3, name: 'Georges Brassens' },
-        { id: 4, name: 'Don Emilio' },
-        { id: 5, name: 'Johann Sebastian Bach' },
-        { id: 6, name: 'Jimi Hendrix' },
-        { id: 7, name: 'Black Sabbath' },
-        { id: 8, name: 'Christophe Thiebaud' },
-        { id: 9, name: 'Eric Mugnier' },
-        { id: 10, name: "Umberto D'Aloise" },
-        { id: 11, name: "Tom Jobim" },
-        { id: 12, name: "Deep Purple" },
-        { id: 13, name: "Oscar Hammerstein / Jerome Kern" },
-        { id: 14, name: "Dizzy Gillespie" },
-        
-         
-    ];
-
-    const performers = [
-        { id: 0, name: 'Antonino' },
-        { id: 1, name: 'Enrica' },
-        { id: 2, name: 'Giorgio' },
-        { id: 3, name: 'Jacques' },
-        { id: 4, name: 'Marco' },
-        { id: 5, name: 'Martedì Canzonette' },
-        { id: 6, name: 'Nicola' },
-        { id: 7, name: 'Theo' },
-        { id: 8, name: 'Umberto' },
-        { id: 9, name: 'Christophe' /* , desc: "⚠️ solo 1 o 2 pezzi tra questi: (in ordine di preferenza/fattibilità) ⚠️" */ },
-        { id: 100, name: 'Fin' },
-        
-    ]
-
-    const songs = [
-        { id: 10, title: 'Fortnight', artist: 0, duration: 4, url: "https://youtu.be/q3zqJs7JUCQ" },
-        { id: 11, title: 'Ho amato tutto', artist: 1, duration: 4, url: "https://youtu.be/lM04HIC3NL8" },
-        { id: 12, title: 'A Whiter Shade of Pale', artist: 2, duration: 5, url: "https://youtu.be/VZqPoriYXho" },
-        { id: 13, title: 'Luiza', artist:11, duration: 3, url: "https://youtu.be/3t9Zw-H6kb4" },
-
-        { id: 20, title: 'Les Passantes', artist: 3, duration: 5, url: "https://youtu.be/t0o21TWxNAw" },
-        { id: 21, title: 'La Marine', artist: 3, duration: 3, url: "https://youtu.be/bjMy7VpyhPc" },
-        { id: 22, title: 'Le Gorille', artist: 3, duration: 3, url: "https://youtu.be/k4DUouE3D0Y" },
-        { id: 23, title: 'Les Illusions Perdues', artist: 3, duration: 2, url: "https://youtu.be/TqTvYKp4cGk"},
-
-        { id: 39, title: 'Blues della Casa Sola', artist: 4, duration: 4, url: "https://youtu.be/RSVPQ9Yfo5w" },
-        { id: 40, title: 'La Casa di J-Ax', artist: 4, duration: 3, url: "https://youtu.be/psu1Po-bPGE" },
-        { id: 41, title: 'Ok, ok, etc.', artist: 4, duration: 3, url: "https://youtu.be/Cc9X8fQxZi4" },
-        { id: 42, title: 'A Berlino Stasera', artist: 4, duration: 3, url: "https://youtu.be/yX32RH74cZA", clazz: "optional" },
-
-        { id: 50, title: 'Little Wing', artist: 6, duration: 5, url: null },
-
-        { id: 60, title: 'Medley TBD', artist: 7, duration: 5, url: null },
-
-        { id: 70, title: 'Air sur la corde de sol [2e mouvement de la suite orchestrale no 3 en ré majeur BWV 1068]', artist: 5, duration: 4, url: "https://youtu.be/Hyvc1mdhAzA" },
-        { id: 71, title: 'sans titre', artist: 10, duration: 4, url: null },
-
-        { id: 80, title: 'Larme', artist: 8, duration: 3, url: "https://youtu.be/Zk_YubAnJmM" },
-        { id: 81, title: 'Matsubaba', artist: 9, duration: 3, url: "https://youtu.be/OZuS8QQsQK8", clazz: "optional" },
-        { id: 82, title: 'Le Bateau ivre', artist: 8, duration: 7, url: "https://youtu.be/a3Ek2EYkGsw" },
-        { id: 83, title: 'Après « Les filles du botaniste »', artist: 8, duration: 5, url: "https://youtu.be/i8_9mvtQetY" },
-        { id: 84, title: 'Sensation', artist: 8, duration: 5, url: "https://youtu.be/l_bjho9aLRE" },
-        { id: 85, title: 'Nous Partirons', artist: 8, duration: 5, url: "https://youtu.be/8VOp8qk9-a4" },
-
-        { id: 90, title: 'Black Night', artist: 12, duration: 4, url: "https://youtu.be/Et3AJIry4iI" },
+    <script>
+        // Data Structures
+        const artists = [
+            { id: 0, name: 'Taylor Swift' },
+            { id: 1, name: 'Tosca' },
+            { id: 2, name: 'Procol Harum / Annie Lennox' },
+            { id: 3, name: 'Georges Brassens' },
+            { id: 4, name: 'Don Emilio' },
+            { id: 5, name: 'Johann Sebastian Bach' },
+            { id: 6, name: 'Jimi Hendrix' },
+            { id: 7, name: 'Black Sabbath' },
+            { id: 8, name: 'Christophe Thiebaud' },
+            { id: 9, name: 'Eric Mugnier' },
+            { id: 10, name: "Umberto D'Aloise" },
+            { id: 11, name: "Tom Jobim" },
+            { id: 12, name: "Deep Purple" },
+            { id: 13, name: "Oscar Hammerstein / Jerome Kern" },
+            { id: 14, name: "Dizzy Gillespie" },
 
 
-        { id: 100, title: 'All The Things You Are', artist: 13, duration: 4, url: "https://youtu.be/Et3AJIry4iI" },
-        { id: 101, title: 'Wave', artist: 11, duration: 3, url: "https://youtu.be/IRcOKz6fsr4" },
-        { id: 102, title: 'Night in Tunisia', artist: 14, duration: 5, url: "https://youtu.be/9ZEMoXjl-Xg", clazz: "optional"  },
-        
-    ];
+        ];
 
-    const program = [
-        { type: 'presentation', performer: 1, duration: 4 },
-        { type: 'performance', performer: 1, song: 10 },
-        { type: 'performance', performer: 1, song: 11 },
-        { type: 'performance', performer: 1, song: 13 },
-        { type: 'presentation', performer: 2, duration: 3 },
-        { type: 'performance', performer: 2, song: 100 },
-        { type: 'performance', performer: 2, song: 101 },
-        { type: 'performance', performer: 2, song: 102 },
-        { type: 'presentation', performer: 3, duration: 5 },
-        { type: 'performance', performer: 3, song: 20 },
-        { type: 'performance', performer: 3, song: 21 },
-        { type: 'performance', performer: 3, song: 23 },
-        { type: 'presentation', performer: 4, duration: 1 },
-        { type: 'performance', performer: 4, song: 90 },
-        { type: 'presentation', performer: 5, duration: 2 },
-        { type: 'performance', performer: 5, song: 39 },
-        { type: 'performance', performer: 5, song: 40 },
-        { type: 'performance', performer: 5, song: 41 },
-        { type: 'performance', performer: 5, song: 42 },
-        { type: 'presentation', performer: 6, duration: 5 },
-        { type: 'performance', performer: 6, song: 50 },
-        { type: 'presentation', performer: 7, duration: 5 },
-        { type: 'performance', performer: 7, song: 60 },
-        { type: 'presentation', performer: 8, duration: 1 },
-        /*        { type: 'performance', performer: 7, song: 70 }, */
-        { type: 'performance', performer: 8, song: 71 },
-        { type: 'presentation', performer: 9, duration: 7 },
-        { type: 'performance', performer: 9, song: 80 },
-        { type: 'performance', performer: 9, song: 82 },
-        { type: 'performance', performer: 9, song: 81 },
-        { type: 'presentation', performer: 100, duration: 0 },
-        /* { type: 'performance', performer: 8, song: 83 },
-        { type: 'performance', performer: 8, song: 84 },
-        { type: 'performance', performer: 8, song: 85 }, */
-    ];
+        const performers = [
+            { id: 0, name: 'Antonino' },
+            { id: 1, name: 'Emilio' },
+            { id: 2, name: 'Enrica' },
+            { id: 3, name: 'Giorgio' },
+            { id: 4, name: 'Jacques' },
+            { id: 5, name: 'Marco' },
+            { id: 6, name: 'Mauro' },
+            { id: 7, name: 'Michele' },
+            { id: 8, name: 'Martedì Canzonette' },
+            { id: 9, name: 'Nicola' },
+            { id: 10, name: 'Theo' },
+            { id: 11, name: 'Umberto' },
+            { id: 12, name: 'Christophe' /* , desc: "⚠️ solo 1 o 2 pezzi tra questi: (in ordine di preferenza/fattibilità) ⚠️" */ },
+            { id: 100, name: 'Fin' },
+        ]
 
-    // Starting time of the concert
-    const concertStartTime = new Date('2024-08-18T21:30:00'); // Set your desired start time here
+        const songs = [
+            { id: 10, title: 'Fortnight', artist: 0, duration: 4, url: "https://youtu.be/q3zqJs7JUCQ" },
+            { id: 11, title: 'Ho amato tutto', artist: 1, duration: 4, url: "https://youtu.be/lM04HIC3NL8" },
+            { id: 12, title: 'A Whiter Shade of Pale', artist: 2, duration: 5, url: "https://youtu.be/VZqPoriYXho" },
+            { id: 13, title: 'Luiza', artist: 11, duration: 3, url: "https://youtu.be/3t9Zw-H6kb4" },
 
-    // Function to format time
-    function formatTime(date) {
-        return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-    }
+            { id: 20, title: 'Les Passantes', artist: 3, duration: 5, url: "https://youtu.be/t0o21TWxNAw" },
+            { id: 21, title: 'La Marine', artist: 3, duration: 3, url: "https://youtu.be/bjMy7VpyhPc" },
+            { id: 22, title: 'Le Gorille', artist: 3, duration: 3, url: "https://youtu.be/k4DUouE3D0Y" },
+            { id: 23, title: 'Les Illusions Perdues', artist: 3, duration: 2, url: "https://youtu.be/TqTvYKp4cGk" },
 
-    // Function to get artist by ID
-    function getArtistById(id) {
-        return artists.find(artist => artist.id === id);
-    }
+            { id: 39, title: 'Blues della Casa Sola', artist: 4, duration: 4, url: "https://youtu.be/RSVPQ9Yfo5w" },
+            { id: 40, title: 'La Casa di J-Ax', artist: 4, duration: 3, url: "https://youtu.be/psu1Po-bPGE" },
+            { id: 41, title: 'Ok, ok, etc.', artist: 4, duration: 3, url: "https://youtu.be/Cc9X8fQxZi4" },
+            { id: 42, title: 'A Berlino Stasera', artist: 4, duration: 3, url: "https://youtu.be/yX32RH74cZA", clazz: "optional" },
 
-    // Function to get performer by ID
-    function getPerformerById(id) {
-        return performers.find(performer => performer.id === id);
-    }
+            { id: 50, title: 'Little Wing', artist: 6, duration: 5, url: null },
 
-    // Function to get song by ID
-    function getSongById(id) {
-        return songs.find(song => song.id === id);
-    }
+            { id: 60, title: 'Medley TBD', artist: 7, duration: 5, url: null },
 
-    // Function to render the program
-    function renderProgram() {
-        const programContainer = document.getElementById('concert-program');
-        programContainer.innerHTML = '';
+            { id: 70, title: 'Air sur la corde de sol [2e mouvement de la suite orchestrale no 3 en ré majeur BWV 1068]', artist: 5, duration: 4, url: "https://youtu.be/Hyvc1mdhAzA" },
+            { id: 71, title: 'sans titre', artist: 10, duration: 4, url: null },
 
-        let currentTime = new Date(concertStartTime);
+            { id: 80, title: 'Larme', artist: 8, duration: 3, url: "https://youtu.be/Zk_YubAnJmM" },
+            { id: 81, title: 'Matsubaba', artist: 9, duration: 3, url: "https://youtu.be/OZuS8QQsQK8", clazz: "optional" },
+            { id: 82, title: 'Le Bateau ivre', artist: 8, duration: 7, url: "https://youtu.be/a3Ek2EYkGsw" },
+            { id: 83, title: 'Après « Les filles du botaniste »', artist: 8, duration: 5, url: "https://youtu.be/i8_9mvtQetY" },
+            { id: 84, title: 'Sensation', artist: 8, duration: 5, url: "https://youtu.be/l_bjho9aLRE" },
+            { id: 85, title: 'Nous Partirons', artist: 8, duration: 5, url: "https://youtu.be/8VOp8qk9-a4" },
 
-        // Group program items by performer
-        const performerPrograms = {};
-        program.forEach(item => {
-            if (!performerPrograms[item.performer]) {
-                performerPrograms[item.performer] = [];
-            }
-            performerPrograms[item.performer].push(item);
-        });
+            { id: 90, title: 'Black Night', artist: 12, duration: 4, url: "https://youtu.be/Et3AJIry4iI" },
 
-        // Render the program
-        Object.keys(performerPrograms).forEach(performerId => {
-            const performer = getPerformerById(parseInt(performerId));
-            const performerItems = performerPrograms[performerId];
 
-            // Render performer presentation and songs
-            const performerDiv = document.createElement('div');
-            performerDiv.classList.add('performer-item', 'p-3', 'border', 'rounded');
+            { id: 100, title: 'All The Things You Are', artist: 13, duration: 4, url: "https://youtu.be/Et3AJIry4iI" },
+            { id: 101, title: 'Wave', artist: 11, duration: 3, url: "https://youtu.be/IRcOKz6fsr4" },
+            { id: 102, title: 'Night in Tunisia', artist: 14, duration: 5, url: "https://youtu.be/9ZEMoXjl-Xg", clazz: "optional" },
 
-            performerItems.forEach(item => {
-                if (item.type === 'presentation') {
-                    const descHTML = performer.desc ? `<h5><i>${performer.desc}</i></h5>` : "";
-                    performerDiv.innerHTML += `
+        ];
+
+        const program = [
+            { type: 'presentation', performer: 2, duration: 4 },
+            { type: 'performance', performer: 2, song: 11, with: [12] },
+            { type: 'performance', performer: 2, song: 10, with: [0, 9, 12] },
+            { type: 'performance', performer: 2, song: 13, with: [12] },
+            { type: 'presentation', performer: 3, duration: 3 },
+            { type: 'performance', performer: 3, song: 100, with: [12] },
+            { type: 'performance', performer: 3, song: 101, with: [12] },
+            { type: 'performance', performer: 3, song: 102, with: [12] },
+            { type: 'presentation', performer: 4, duration: 5 },
+            { type: 'performance', performer: 4, song: 20, with: [12] },
+            { type: 'performance', performer: 4, song: 21, with: [12] },
+            { type: 'performance', performer: 4, song: 23, with: [12] },
+            { type: 'presentation', performer: 5, duration: 1 },
+            { type: 'performance', performer: 5, song: 90, with: [6, 12] },
+            { type: 'presentation', performer: 8, duration: 2 },
+            { type: 'performance', performer: 8, song: 39, with: [1, 7, 12] },
+            { type: 'performance', performer: 8, song: 40, with: [1, 7, 12] },
+            { type: 'performance', performer: 8, song: 41, with: [1, 7, 12] },
+            { type: 'performance', performer: 8, song: 42, with: [1, 7, 12] },
+            { type: 'presentation', performer: 9, duration: 5 },
+            { type: 'performance', performer: 9, song: 50, with: [0, 5, 12] },
+            { type: 'presentation', performer: 10, duration: 5 },
+            { type: 'performance', performer: 10, song: 60, with: [0, 2, 6, 12] },
+            { type: 'presentation', performer: 11, duration: 1 },
+            /*        { type: 'performance', performer: 7, song: 70 }, */
+            { type: 'performance', performer: 11, song: 71, with: [12] },
+            { type: 'presentation', performer: 12, duration: 7 },
+            { type: 'performance', performer: 12, song: 80, with: [] },
+            { type: 'performance', performer: 12, song: 82, with: [3, 4, 5, 6, 9 ] },
+            { type: 'performance', performer: 12, song: 81, with: [] },
+            { type: 'presentation', performer: 100, duration: 0 },
+            /* { type: 'performance', performer: 8, song: 83 },
+            { type: 'performance', performer: 8, song: 84 },
+            { type: 'performance', performer: 8, song: 85 }, */
+        ];
+
+        // Starting time of the concert
+        const concertStartTime = new Date('2024-08-18T21:30:00'); // Set your desired start time here
+
+        // Function to format time
+        function formatTime(date) {
+            return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        }
+
+        // Function to get artist by ID
+        function getArtistById(id) {
+            return artists.find(artist => artist.id === id);
+        }
+
+        // Function to get performer by ID
+        function getPerformerById(id) {
+            return performers.find(performer => performer.id === id);
+        }
+
+        // Function to get song by ID
+        function getSongById(id) {
+            return songs.find(song => song.id === id);
+        }
+
+        // Function to render the program
+        function renderProgram() {
+            const programContainer = document.getElementById('concert-program');
+            programContainer.innerHTML = '';
+
+            let currentTime = new Date(concertStartTime);
+
+            // Group program items by performer
+            const performerPrograms = {};
+            program.forEach(item => {
+                if (!performerPrograms[item.performer]) {
+                    performerPrograms[item.performer] = [];
+                }
+                performerPrograms[item.performer].push(item);
+            });
+
+            // Render the program
+            Object.keys(performerPrograms).forEach(performerId => {
+                const performer = getPerformerById(parseInt(performerId));
+                const performerItems = performerPrograms[performerId];
+
+                // Render performer presentation and songs
+                const performerDiv = document.createElement('div');
+                performerDiv.classList.add('performer-item', 'p-3', 'border', 'rounded');
+
+                performerItems.forEach(item => {
+                    if (item.type === 'presentation') {
+                        const descHTML = performer.desc ? `<h5><i>${performer.desc}</i></h5>` : "";
+                        performerDiv.innerHTML += `
                         <h4>${performer.name} - ${formatTime(currentTime)}</h4>
                         <!-- p><strong>Presentation Duration:</strong> ${item.duration} minutes</!-->
                         ${descHTML}
                     `;
-                    // Update the current time based on the presentation duration
-                    if (!item.clazz || item.clazz!=="optional") {
-                        currentTime.setMinutes(currentTime.getMinutes() + item.duration);
-                    }
-                } else if (item.type === 'performance') {
-                    const song = getSongById(item.song);
-                    const artist = getArtistById(song.artist);
+                        // Update the current time based on the presentation duration
+                        if (!item.clazz || item.clazz !== "optional") {
+                            currentTime.setMinutes(currentTime.getMinutes() + item.duration);
+                        }
+                    } else if (item.type === 'performance') {
+                        const song = getSongById(item.song);
+                        const artist = getArtistById(song.artist);
 
-                    const songHTML = song.url && !song.clazz ? `<a href="${song.url}" target="_blank">${song.title}</a>` : song.title
+                        const songHTML = song.url && !song.clazz ? `<a href="${song.url}" target="_blank">${song.title}</a>` : song.title
+                        let withHTML = ""
+                        if (item.with.length) {
+                            withHTML = "+ "
+                            withHTML = item.with.reduce((accumulator, currentValue) => {
+                                return accumulator + performers[currentValue].name  + ", " ;
+                            }, 
+                            withHTML)
+                            withHTML = withHTML.substring(0, withHTML.length - 2) + ".";
+                        }
 
-                    performerDiv.innerHTML += `
-                        <div class="program-item ${song.clazz}">
-                            <hr>
-                            <p>${songHTML} (${artist.name})</p>
-                            <p>${song.duration} minutes</p>
+                        performerDiv.innerHTML += `
+                        <hr>
+                        <div class="d-flex row program-item ${song.clazz}">
+                            <div class="col">
+                                <p>${songHTML} (${artist.name})</p>
+                                <p>${song.duration} minutes</p>
+                            </div>
+                            <div class="col">
+                                ${withHTML}
+                            </div>
+                                
                         </div>
                     `;
-                    // Update the current time based on the song duration
-                    currentTime.setMinutes(currentTime.getMinutes() + song.duration);
-                }
+                        // Update the current time based on the song duration
+                        currentTime.setMinutes(currentTime.getMinutes() + song.duration);
+                    }
+                });
+
+                programContainer.appendChild(performerDiv);
             });
+        }
 
-            programContainer.appendChild(performerDiv);
-        });
-    }
-
-    // Initial render
-    renderProgram();
-</script>
+        // Initial render
+        renderProgram();
+    </script>
 
 </body>
+
 </html>
