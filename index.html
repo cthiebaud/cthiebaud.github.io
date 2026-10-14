@@ -45,7 +45,8 @@
       margin: 0 3px;
     }
 
-    td:first-child {
+    td:first-child,
+    td:nth-child(2) {
       text-align: right !important;
     }
 
@@ -118,6 +119,7 @@
       <thead>
         <tr>
           <th class="text-center sortable" data-sort="domain">Domain</th>
+          <th class="text-center sortable" data-sort="domain">Subdomain</th>
           <th class="text-center sortable" data-sort="local">Local</th>
           <th class="text-center sortable" data-sort="activity" title="Mean date across every commit in the repo's full history &#10;(equal weight per commit) &#8212; where the center of gravity of development sits, not just the latest touch">Peak Activity</th>
           <th class="text-center sortable" data-sort="lastCommit">Last Commit</th>
@@ -129,7 +131,7 @@
       </tbody>
       <tfoot>
         <tr>
-          <td class="text-secondary text-end" colspan="6">
+          <td class="text-secondary text-end" colspan="7">
             <span id="nginx-location">
               /usr/local/etc/nginx/nginx.conf
             </span>
@@ -165,6 +167,8 @@
 
 <script>
   "use strict"
+
+  const ON_CTHIEBAUD_COM = window.location.hostname === 'cthiebaud.com'
 
   /* beautify ignore:start */
   const domains = {
@@ -220,9 +224,6 @@
   }
 
   function generatehref(name, hrefGenerator) {
-    if (name === "cthiebaud.com") {
-      return null
-    }
     if (isValidString(name) && name.includes("http")) {
       return name
     }
@@ -269,8 +270,18 @@
     let tr = document.createElement('tr')
     tr.setAttribute('id', domainName)
     // tr.appendChild(createTD(index))
-    tr.appendChild(createTD(domainName, value.noPublicSite ? null : (value.page ? n => `https://${n}/${value.page}` : n => `https://${n}`), "align-middle"))
-    tr.appendChild(createTD(value.local, value.page ? n => `http://localhost:${n}/${value.page}` : n => `http://localhost:${n}`, "text-center tabular-nums fs-6 align-middle"))
+    const isRoot = domainName === "cthiebaud.com"
+    const domainHrefGen = isRoot
+      ? (ON_CTHIEBAUD_COM ? null : (n => `https://${n}`))
+      : (value.noPublicSite ? null : (value.page ? n => `https://${n}/${value.page}` : n => `https://${n}`))
+    tr.appendChild(createTD(isRoot ? domainName : null, domainHrefGen, "align-middle"))
+    const tdSubdomain = createTD(isRoot ? null : domainName, domainHrefGen, "align-middle")
+    if (!isRoot && tdSubdomain.firstChild) {
+      tdSubdomain.firstChild.textContent = domainName.replace(/\.cthiebaud\.com$/, "")
+    }
+    tr.appendChild(tdSubdomain)
+    const localHrefGen = value.page ? n => `http://localhost:${n}/${value.page}` : n => `http://localhost:${n}`
+    tr.appendChild(createTD(value.local, (isRoot && !ON_CTHIEBAUD_COM) ? null : localHrefGen, "text-center tabular-nums fs-6 align-middle"))
     const tdActivity = createTD(value.activity ? value.activity.slice(0, 7) : value.activity, null, "text-center tabular-nums fs-6 align-middle")
     if (value.commits) {
       tdActivity.setAttribute('title', `mean of ${value.commits} commits`)
@@ -284,7 +295,7 @@
 
   const tbody = document.querySelector('#domains')
   let domainEntries = Object.entries(domains)
-  const sortState = { key: null, ascending: true }
+  const sortState = { key: 'domain', ascending: true }
 
   function sortValue(value, key) {
     if (key === 'domain') return value[0].replace(/\.?cthiebaud\.com$/, '')
@@ -301,6 +312,10 @@
       entries.sort((a, b) => {
         const va = sortValue(a, sortState.key)
         const vb = sortValue(b, sortState.key)
+        if (sortState.key === 'domain') {
+          if (va === '' && vb !== '') return -1
+          if (vb === '' && va !== '') return 1
+        }
         if (va < vb) return sortState.ascending ? -1 : 1
         if (va > vb) return sortState.ascending ? 1 : -1
         return 0
