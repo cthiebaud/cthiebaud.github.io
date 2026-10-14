@@ -98,6 +98,10 @@
       opacity: 1;
     }
 
+    tfoot tr:last-child td {
+      border-bottom: none;
+    }
+
   </style>
 
 </head>
@@ -143,6 +147,10 @@
             <button class="copyButton" data-clipboard-target="#nginx-restart"><img
                 src="/svgs/copy-svgrepo-com.svg"></button>
             <br />
+            <span id="stats-updated">
+              stats last updated: 2026-10-14
+            </span>
+            <br />
           </td>
         </tr>
       </tfoot>
@@ -172,7 +180,7 @@
 
   /* beautify ignore:start */
   const domains = {
-    "cthiebaud.com": { gh: "cthiebaud/cthiebaud.github.io", local: 5050, activity: "2023-04-22", lastCommit: "2026-10-14", commits: 165 },
+    "cthiebaud.com": { gh: "cthiebaud/cthiebaud.github.io", local: 5050, activity: "2023-05-15", lastCommit: "2026-10-14", commits: 168 },
     "aequologica.cthiebaud.com": { gh: "aequologica/aequologica.github.io", local: 8081, activity: "2022-01-21", lastCommit: "2026-10-02", commits: 793 },
     "aletheia.cthiebaud.com": { gh: "cthiebaud/truth", local: 9090, apple: "https://apps.apple.com/us/app/aletheia-by-%C3%A6quologica/id6476017817", google: "https://play.google.com/store/apps/details?id=com.cthiebaud.aletheia.twa", activity: "2024-02-25", lastCommit: "2024-04-13", commits: 605 },
     "athenaeum.cthiebaud.com": { gh: "athenaeum-brew/making-of", local: 3004, noPublicSite: true, activity: "2024-07-26", lastCommit: "2024-12-04", commits: 185 },
