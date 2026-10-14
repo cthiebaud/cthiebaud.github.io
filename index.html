@@ -73,6 +73,10 @@
       padding: 0;
     }
 
+    .tabular-nums {
+      font-variant-numeric: tabular-nums;
+    }
+
     th.sortable {
       cursor: pointer;
       user-select: none;
@@ -117,7 +121,7 @@
           <th class="text-center sortable" data-sort="local">Local</th>
           <th class="text-center sortable" data-sort="activity" title="Mean date across every commit in the repo's full history &#10;(equal weight per commit) &#8212; where the center of gravity of development sits, not just the latest touch">Peak Activity</th>
           <th class="text-center sortable" data-sort="lastCommit">Last Commit</th>
-          <th class="text-center sortable" data-sort="commits" title="Rough estimate &#8212; full commit history, deduped by hash across branches/forks where a domain spans more than one repo">Commits</th>
+          <th class="text-end sortable" data-sort="commits" title="Rough estimate &#8212; full commit history, deduped by hash across branches/forks where a domain spans more than one repo">Commits</th>
           <th class="text-center">Links</th>
         </tr>
       </thead>
@@ -265,16 +269,16 @@
     let tr = document.createElement('tr')
     tr.setAttribute('id', domainName)
     // tr.appendChild(createTD(index))
-    tr.appendChild(createTD(domainName, value.noPublicSite ? null : (value.page ? n => `https://${n}/${value.page}` : n => `https://${n}`)))
-    tr.appendChild(createTD(value.local, value.page ? n => `http://localhost:${n}/${value.page}` : n => `http://localhost:${n}`, "text-center"))
-    const tdActivity = createTD(value.activity ? value.activity.slice(0, 7) : value.activity, null, "text-center font-monospace")
+    tr.appendChild(createTD(domainName, value.noPublicSite ? null : (value.page ? n => `https://${n}/${value.page}` : n => `https://${n}`), "align-middle"))
+    tr.appendChild(createTD(value.local, value.page ? n => `http://localhost:${n}/${value.page}` : n => `http://localhost:${n}`, "text-center tabular-nums fs-6 align-middle"))
+    const tdActivity = createTD(value.activity ? value.activity.slice(0, 7) : value.activity, null, "text-center tabular-nums fs-6 align-middle")
     if (value.commits) {
       tdActivity.setAttribute('title', `mean of ${value.commits} commits`)
     }
     tr.appendChild(tdActivity)
-    tr.appendChild(createTD(value.lastCommit, null, "text-center font-monospace"))
-    tr.appendChild(createTD(value.commits ? value.commits.toLocaleString() : value.commits, null, "text-center font-monospace"))
-    tr.appendChild(createTD([value.apple, value.google, value.azure, value.gh], n => `https://github.com/${n}`, "text-end"))
+    tr.appendChild(createTD(value.lastCommit, null, "text-center tabular-nums fs-6 align-middle"))
+    tr.appendChild(createTD(value.commits ? value.commits.toLocaleString() : value.commits, null, "text-end tabular-nums fs-6 align-middle"))
+    tr.appendChild(createTD([value.apple, value.google, value.azure, value.gh], n => `https://github.com/${n}`, "text-end align-middle"))
     return tr
   }
 
