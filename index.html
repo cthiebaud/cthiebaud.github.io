@@ -73,6 +73,26 @@
       padding: 0;
     }
 
+    th.sortable {
+      cursor: pointer;
+      user-select: none;
+      white-space: nowrap;
+    }
+
+    th.sortable:hover {
+      color: #cff4fc;
+    }
+
+    th.sortable .sort-arrow {
+      display: inline-block;
+      width: 1em;
+      opacity: 0.4;
+    }
+
+    th.sortable.sort-active .sort-arrow {
+      opacity: 1;
+    }
+
   </style>
 
 </head>
@@ -93,8 +113,11 @@
     <table class="table table-sm table-dark table-hover">
       <thead>
         <tr>
-          <th class="text-center">Domain</th>
-          <th class="text-center">Local</th>
+          <th class="text-center sortable" data-sort="domain">Domain</th>
+          <th class="text-center sortable" data-sort="local">Local</th>
+          <th class="text-center sortable" data-sort="activity" title="Mean date across every commit in the repo's full history &#10;(equal weight per commit) &#8212; where the center of gravity of development sits, not just the latest touch">Peak Activity</th>
+          <th class="text-center sortable" data-sort="lastCommit">Last Commit</th>
+          <th class="text-center sortable" data-sort="commits" title="Rough estimate &#8212; full commit history, deduped by hash across branches/forks where a domain spans more than one repo">Commits</th>
           <th class="text-center">Links</th>
         </tr>
       </thead>
@@ -102,7 +125,7 @@
       </tbody>
       <tfoot>
         <tr>
-          <td class="text-secondary text-end" colspan="3">
+          <td class="text-secondary text-end" colspan="6">
             <span id="nginx-location">
               /usr/local/etc/nginx/nginx.conf
             </span>
@@ -141,19 +164,25 @@
 
   /* beautify ignore:start */
   const domains = {
-    "cthiebaud.com": { gh: "cthiebaud/cthiebaud.github.io", local: 5050 },
-    "aequologica.cthiebaud.com": { gh: "aequologica/aequologica.github.io", local: 8081 },
-    "aletheia.cthiebaud.com": { gh: "cthiebaud/truth", local: 9090, apple: "https://apps.apple.com/us/app/aletheia-by-%C3%A6quologica/id6476017817", google: "https://play.google.com/store/apps/details?id=com.cthiebaud.aletheia.twa" },
-    "bookshelves.cthiebaud.com": { gh: "cthiebaud/bookshelves", local: 2345 },
-    "bwv.cthiebaud.com": { gh: "orgs/musicollator/repositories" },
-    "ciaccona.cthiebaud.com": { gh: "musicollator/ciaccona", local: 1010 },
-    "emugnier.cthiebaud.com": { gh: "cthiebaud/emugnier", local: 6060 },
-    "gear.cthiebaud.com": { gh: "cthiebaud/gear", local: 8082 },
-    "klam.cthiebaud.com": { gh: "cthiebaud/klam", local: 7070 },
-    "mundial.cthiebaud.com": { gh: "born-in-plays-for", local: 4040 },
-    "music.cthiebaud.com": { gh: "cthiebaud/music", local: 2020 },
-    "openmozart.cthiebaud.com": { gh: "cthiebaud/openmozart.net", local: 5001 },
-    "openricard.cthiebaud.com": { gh: "cthiebaud/openricard.net" },
+    "cthiebaud.com": { gh: "cthiebaud/cthiebaud.github.io", local: 5050, activity: "2023-04-14", lastCommit: "2026-10-11", commits: 164 },
+    "aequologica.cthiebaud.com": { gh: "aequologica/aequologica.github.io", local: 8081, activity: "2019-02-10", lastCommit: "2026-10-02", commits: 1505 },
+    "aletheia.cthiebaud.com": { gh: "cthiebaud/truth", local: 9090, apple: "https://apps.apple.com/us/app/aletheia-by-%C3%A6quologica/id6476017817", google: "https://play.google.com/store/apps/details?id=com.cthiebaud.aletheia.twa", activity: "2024-02-25", lastCommit: "2024-04-13", commits: 612 },
+    "athenaeum.cthiebaud.com": { gh: "athenaeum-brew/making-of", local: 3004, noPublicSite: true, activity: "2024-07-26", lastCommit: "2024-12-04", commits: 185 },
+    "bookshelves.cthiebaud.com": { gh: "cthiebaud/bookshelves", local: 2345, activity: "2023-11-11", lastCommit: "2024-02-23", commits: 454 },
+    "bwv.cthiebaud.com": { gh: "orgs/musicollator/repositories", activity: "2025-06-12", lastCommit: "2026-01-07", commits: 508 },
+    "ciaccona.cthiebaud.com": { gh: "musicollator/ciaccona", local: 1010, activity: "2023-07-10", lastCommit: "2025-02-24", commits: 516 },
+    "covid.cthiebaud.com": { gh: "covid-aequologica-net/covid-aequologica-net.github.io", local: 3005, noPublicSite: true, activity: "2020-11-14", lastCommit: "2021-09-14", commits: 552 },
+    "emugnier.cthiebaud.com": { gh: "cthiebaud/emugnier", local: 6060, activity: "2021-04-29", lastCommit: "2025-01-27", commits: 316 },
+    "gear.cthiebaud.com": { gh: "cthiebaud/gear", local: 8082, activity: "2026-08-29", lastCommit: "2026-09-12", commits: 58 },
+    "hat.cthiebaud.com": { noPublicSite: true, activity: "2018-05-23", lastCommit: "2021-03-09", commits: 1023 },
+    "iroif.cthiebaud.com": { gh: "cthiebaud/iroif", local: 3003, noPublicSite: true, activity: "2016-02-20", lastCommit: "2019-10-02", commits: 27 },
+    "klam.cthiebaud.com": { gh: "cthiebaud/klam", local: 7070, activity: "2021-09-22", lastCommit: "2021-11-09", commits: 41 },
+    "mundial.cthiebaud.com": { gh: "born-in-plays-for/mundial", local: 4040, activity: "2026-06-28", lastCommit: "2026-07-27", commits: 1005 },
+    "music.cthiebaud.com": { gh: "cthiebaud/music", local: 2020, activity: "2025-04-25", lastCommit: "2026-10-13", commits: 164 },
+    "openmozart.cthiebaud.com": { gh: "cthiebaud/openmozart.net", local: 5001, activity: "2021-10-05", lastCommit: "2023-03-07", commits: 364 },
+    "openricard.cthiebaud.com": { gh: "cthiebaud/openricard.net", activity: "2021-10-05", lastCommit: "2023-03-07", commits: 325 },
+    "sangiosleague.cthiebaud.com": { gh: "sangiosleague/sangiosleague.github.io", local: 4001, noPublicSite: true, activity: "2021-09-15", lastCommit: "2023-01-19", commits: 267 },
+    "sangiovannilipioni.cthiebaud.com": { gh: "sangiovannilipioni/sangiovannilipioni.github.io", local: 3001, noPublicSite: true, activity: "2021-11-01", lastCommit: "2023-03-05", commits: 164 },
   }
   /* beautify ignore:end */
 
@@ -196,13 +225,13 @@
     if (hrefGenerator) {
       return hrefGenerator(name)
     }
-    return name
+    return null
   }
 
   function createTD(names, hrefGenerator, clazz) {
     let td = document.createElement('td')
     if (clazz) {
-      td.classList.add(clazz)
+      td.classList.add(...clazz.split(' '))
     }
     if (!isArray(names)) {
       names = [names]
@@ -236,16 +265,83 @@
     let tr = document.createElement('tr')
     tr.setAttribute('id', domainName)
     // tr.appendChild(createTD(index))
-    tr.appendChild(createTD(domainName, value.page ? n => `https://${n}/${value.page}` : n => `https://${n}`))
+    tr.appendChild(createTD(domainName, value.noPublicSite ? null : (value.page ? n => `https://${n}/${value.page}` : n => `https://${n}`)))
     tr.appendChild(createTD(value.local, value.page ? n => `http://localhost:${n}/${value.page}` : n => `http://localhost:${n}`, "text-center"))
+    const tdActivity = createTD(value.activity ? value.activity.slice(0, 7) : value.activity, null, "text-center font-monospace")
+    if (value.commits) {
+      tdActivity.setAttribute('title', `mean of ${value.commits} commits`)
+    }
+    tr.appendChild(tdActivity)
+    tr.appendChild(createTD(value.lastCommit, null, "text-center font-monospace"))
+    tr.appendChild(createTD(value.commits ? value.commits.toLocaleString() : value.commits, null, "text-center font-monospace"))
     tr.appendChild(createTD([value.apple, value.google, value.azure, value.gh], n => `https://github.com/${n}`, "text-end"))
     return tr
   }
+
   const tbody = document.querySelector('#domains')
-  let i = 1
-  for (const [domainName, value] of Object.entries(domains)) {
-    tbody.appendChild(createTR(i++, domainName, value))
+  let domainEntries = Object.entries(domains)
+  const sortState = { key: null, ascending: true }
+
+  function sortValue(value, key) {
+    if (key === 'domain') return value[0].replace(/\.?cthiebaud\.com$/, '')
+    if (key === 'local') return value[1].local || 0
+    if (key === 'activity') return value[1].activity || ''
+    if (key === 'lastCommit') return value[1].lastCommit || ''
+    if (key === 'commits') return value[1].commits || 0
+    return ''
   }
+
+  function renderRows() {
+    let entries = domainEntries.slice()
+    if (sortState.key) {
+      entries.sort((a, b) => {
+        const va = sortValue(a, sortState.key)
+        const vb = sortValue(b, sortState.key)
+        if (va < vb) return sortState.ascending ? -1 : 1
+        if (va > vb) return sortState.ascending ? 1 : -1
+        return 0
+      })
+    }
+    tbody.innerHTML = ''
+    let i = 1
+    for (const [domainName, value] of entries) {
+      tbody.appendChild(createTR(i++, domainName, value))
+    }
+  }
+
+  function updateSortArrows() {
+    document.querySelectorAll('th.sortable').forEach(th => {
+      th.classList.remove('sort-active')
+      const existingArrow = th.querySelector('.sort-arrow')
+      if (existingArrow) existingArrow.remove()
+      const arrow = document.createElement('span')
+      arrow.classList.add('sort-arrow')
+      if (th.dataset.sort === sortState.key) {
+        th.classList.add('sort-active')
+        arrow.textContent = sortState.ascending ? '▲' : '▼'
+      } else {
+        arrow.textContent = '⇅'
+      }
+      th.appendChild(arrow)
+    })
+  }
+
+  document.querySelectorAll('th.sortable').forEach(th => {
+    th.addEventListener('click', () => {
+      const key = th.dataset.sort
+      if (sortState.key === key) {
+        sortState.ascending = !sortState.ascending
+      } else {
+        sortState.key = key
+        sortState.ascending = true
+      }
+      renderRows()
+      updateSortArrows()
+    })
+  })
+
+  renderRows()
+  updateSortArrows()
 
   // Function to set CSS variable value
   function calcImgMarginRightCSSVariable() {
