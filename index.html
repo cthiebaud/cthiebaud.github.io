@@ -151,6 +151,30 @@
       border-bottom: none;
     }
 
+    .navbar img.cest-bientot {
+      object-fit: contain;
+      border-radius: 0;
+      background-color: transparent;
+    }
+
+    .navbar img.cest-bientot-dark {
+      margin-right: 0 !important;
+    }
+
+    .navbar img.cest-bientot-light {
+      display: none;
+    }
+
+    @media (prefers-color-scheme: light) {
+      .navbar img.cest-bientot-dark {
+        display: none;
+      }
+
+      .navbar img.cest-bientot-light {
+        display: inline-block;
+      }
+    }
+
   </style>
 
 </head>
@@ -163,7 +187,8 @@
         <img title="c'est le petit garçon" src="/moi/petit_cropped_square.jpg">
         <img title="c'est l'étudiant" src="/moi/student_cropped.jpg">
         <img title="c'est en ce moment" src="/moi/marriage_matilde_cropped.jpg">
-        <img title="c'est bientôt" src="/moi/8c9426e8ff0fc7a0a7cd18d6b3c865d4.png">
+        <img title="c'est bientôt" class="cest-bientot cest-bientot-dark" src="/moi/cest-bientot-dark-theme.png">
+        <img title="c'est bientôt" class="cest-bientot cest-bientot-light" src="/moi/cest-bientot-light-theme.png">
       </div>
     </div>
   </nav>
