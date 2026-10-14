@@ -30,14 +30,56 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@latest/dist/css/bootstrap.min.css">
 
   <style>
+    :root {
+      --bg: #212529;
+      --fg: ghostwhite;
+      --link: #cff4fc;
+      --table-bg: #212529;
+      --table-color: ghostwhite;
+      --table-border: rgba(255, 255, 255, 0.15);
+      --table-hover-bg: rgba(128, 128, 128, 0.15);
+      --navbar-bg: #212529;
+      --navbar-img-bg: #101113a0;
+      --muted: #adb5bd;
+    }
+
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #ffffff;
+        --fg: #212529;
+        --link: #0891b2;
+        --table-bg: #ffffff;
+        --table-color: #212529;
+        --table-border: rgba(0, 0, 0, 0.15);
+        --navbar-bg: #f8f9fa;
+        --navbar-img-bg: rgba(255, 255, 255, 0.6);
+        --muted: #6c757d;
+      }
+    }
+
     body {
-      background-color: #212529;
-      color: ghostwhite
+      background-color: var(--bg);
+      color: var(--fg);
     }
 
     a {
-      color: #cff4fc;
+      color: var(--link);
       text-decoration: none;
+    }
+
+    .navbar {
+      background-color: var(--navbar-bg) !important;
+    }
+
+    .table {
+      --bs-table-bg: var(--table-bg);
+      --bs-table-color: var(--table-color);
+      --bs-table-border-color: var(--table-border);
+      --bs-table-hover-bg: var(--table-hover-bg);
+    }
+
+    .text-secondary {
+      color: var(--muted) !important;
     }
 
     td>*,
@@ -55,7 +97,7 @@
       width: 100px;
       height: 100px;
       object-fit: cover;
-      background-color: #101113a0;
+      background-color: var(--navbar-img-bg);
     }
 
     .navbar img:not(:last-child) {
@@ -85,17 +127,24 @@
     }
 
     th.sortable:hover {
-      color: #cff4fc;
+      color: var(--link);
     }
 
     th.sortable .sort-arrow {
       display: inline-block;
-      width: 1em;
-      opacity: 0.4;
+      width: 0.9em;
+      height: 0.9em;
+      vertical-align: -0.1em;
     }
 
-    th.sortable.sort-active .sort-arrow {
-      opacity: 1;
+    @media (prefers-color-scheme: light) {
+      th.sortable .sort-arrow {
+        filter: invert(1);
+      }
+
+      .link-icon {
+        filter: invert(1);
+      }
     }
 
     tfoot tr:last-child td {
@@ -108,7 +157,7 @@
 
 <body>
   <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+  <nav class="navbar navbar-expand-lg static-top">
     <div class="container-lg">
       <div id="imgContainer" class="d-flex justify-content-around w-100" style="overflow: hidden;">
         <img title="c'est le petit garçon" src="/moi/petit_cropped_square.jpg">
@@ -119,7 +168,7 @@
     </div>
   </nav>
   <main class="container-lg table-responsive">
-    <table class="table table-sm table-dark table-hover">
+    <table class="table table-sm table-hover">
       <thead>
         <tr>
           <th class="text-center sortable" data-sort="domain">Domain</th>
@@ -264,6 +313,7 @@
       if (imgSrc) {
         let img = document.createElement('img')
         img.setAttribute('src', imgSrc)
+        img.classList.add('link-icon')
         img.setAttribute('style', "width:24px; height:auto;")
         child.appendChild(img)
       } else {
@@ -341,13 +391,13 @@
       th.classList.remove('sort-active')
       const existingArrow = th.querySelector('.sort-arrow')
       if (existingArrow) existingArrow.remove()
-      const arrow = document.createElement('span')
+      const arrow = document.createElement('img')
       arrow.classList.add('sort-arrow')
       if (th.dataset.sort === sortState.key) {
         th.classList.add('sort-active')
-        arrow.textContent = sortState.ascending ? '▲' : '▼'
+        arrow.src = sortState.ascending ? '/svgs/sort-down.svg' : '/svgs/sort-up.svg'
       } else {
-        arrow.textContent = '⇅'
+        arrow.src = '/svgs/sort-none.svg'
       }
       th.appendChild(arrow)
     })
