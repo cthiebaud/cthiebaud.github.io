@@ -25,6 +25,7 @@ what changed; does not commit or push - review the diff and do that
 yourself.
 """
 import datetime
+import json
 import re
 import subprocess
 from pathlib import Path
@@ -119,6 +120,26 @@ def stats(repo_ref_pairs):
     return mean_d, last_d, len(epochs)
 
 
+LOC_EXCLUDE_LANGS = "SVG,JSON,YAML,CSV"  # data/generated-asset formats, not code
+
+
+def loc(repo_ref_pairs):
+    """Lines of code in the current snapshot at each ref, via cloc --git.
+    Unlike commits/activity this isn't deduped across repos - it's a sum
+    of independent current-state snapshots, not historical events."""
+    total = 0
+    for path, ref in repo_ref_pairs:
+        out = subprocess.run(
+            ["cloc", "--git", ref, f"--exclude-lang={LOC_EXCLUDE_LANGS}", "--json"],
+            capture_output=True, text=True, cwd=path).stdout
+        try:
+            data = json.loads(out)
+        except json.JSONDecodeError:
+            continue
+        total += data.get("SUM", {}).get("code", 0)
+    return total
+
+
 def update_timestamp(html):
     now = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d")
     pattern = re.compile(
@@ -130,17 +151,18 @@ def update_timestamp(html):
 def update_index_html(results):
     html = INDEX_HTML.read_text(encoding="utf-8")
     changes = []
-    for domain, (activity, last_commit, commits) in results.items():
+    for domain, (activity, last_commit, commits, code) in results.items():
         pattern = re.compile(
             r'("' + re.escape(domain) + r'":\s*\{[^\n]*?)'
-            r'activity: "[\d-]+", lastCommit: "[\d-]+", commits: \d+'
+            r'activity: "[\d-]+", lastCommit: "[\d-]+", commits: \d+\s*,\s*loc: \d+'
         )
         m = pattern.search(html)
         if not m:
             print(f"WARNING: could not find entry for {domain!r} in index.html, skipping")
             continue
         old = m.group(0)
-        new = m.group(1) + f'activity: "{activity}", lastCommit: "{last_commit}", commits: {commits}'
+        new = (m.group(1) + f'activity: "{activity}", lastCommit: "{last_commit}", '
+               f'commits: {commits}, loc: {code}')
         if old != new:
             changes.append((domain, old, new))
         html = pattern.sub(lambda _m, new=new: new, html, count=1)
@@ -156,7 +178,9 @@ def main():
     print("Computing stats...")
     results = {}
     for domain, pairs in ENTRIES.items():
-        results[domain] = stats(pairs)
+        mean_d, last_d, n = stats(pairs)
+        code = loc(pairs)
+        results[domain] = (mean_d, last_d, n, code)
 
     changes = update_index_html(results)
 
