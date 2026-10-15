@@ -89,6 +89,8 @@ ENTRIES = {
         (BASE / "sangiovannilipioni/sangiovannilipioni.github.io", "origin/master"),
         (BASE / "sangiovannilipioni/sangiovannilipioni.api", "origin/main"),
     ],
+    # local folder is "ai-dev-efficiency"; the GitHub repo was named "stats"
+    "stats.cthiebaud.com": [(BASE / "cthiebaud/ai-dev-efficiency", "origin/main")],
 }
 
 
